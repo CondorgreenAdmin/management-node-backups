@@ -1,0 +1,63 @@
+{
+  "deb": [
+    "uuid-runtime",
+    {
+      "name": "mde-netfilter",
+      "mdatp_version": "less_than:101.25032.0000"
+    },
+    {
+      "name" : "libnetfilter-queue1",
+      "mdatp_version": "less_than:101.25032.0000"
+    },
+    {
+      "name": "libglib2.0-0",
+      "mdatp_version": "less_than:101.25032.0000"
+    },
+    {
+      "name": "libc6",
+      "package_version": "greater_equal:2.23",
+      "version_extractor": "debian_standard_version"
+    },
+    {
+      "name": "auditd",
+      "mdatp_version": "less_than:101.24082.0004"
+    }
+  ],
+  "rpm": [
+    {
+      "name": "mde-netfilter",
+      "mdatp_version": "less_than:101.25032.0000"
+    },
+    {
+      "name" : "libnetfilter_queue",
+      "mdatp_version": "less_than:101.25032.0000"
+    },
+    {
+      "name": "glib2",
+      "mdatp_version": "less_than:101.25032.0000"
+    },
+    {
+      "name": "glibc",
+      "package_version": "greater_equal:2.17",
+      "version_extractor": "rpm_standard_version"
+    },
+    {
+      "name": "audit",
+      "mdatp_version": "less_than:101.24082.0004"
+    },
+    {
+      "name": "policycoreutils",
+      "mdatp_version": "less_than:101.24082.0004"
+    },
+    {
+      "name": "selinux-policy-targeted",
+      "mdatp_version": "less_than:101.24082.0004"
+    },
+    {
+      "commands": [
+        "semanage"
+      ],
+      "mdatp_version": "less_than:101.24082.0004"
+    }
+  ]
+}

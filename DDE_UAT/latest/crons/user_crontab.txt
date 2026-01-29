@@ -1,0 +1,27 @@
+#min    #hour   #      #month   #DayOfWeek(0,7=Sunday)  #command
+#00      09      *       *       1,2,3,4,5               /home/ec2-user/DDE-SOX-reporting.sh >> /dev/null
+00      09      *       *       1,2,3,4,5               /home/ec2-user/healthchecks/DDE-healthchecks.sh >> /dev/null
+05      09      *       *       1,2,3,4,5               /home/ec2-user/healthchecks/DDE-DBAdmin-checks.sh >> /dev/null
+10      09      *       *       1,2,3,4,5               /home/ec2-user/healthchecks/DDE-Linux-local-checks.sh >> /dev/null
+
+15      09      *       *       1,2,3,4,5               /home/ec2-user/versioning/DDE-releaseChecks.sh >> /dev/null
+55      06      1       *       *                       /home/ec2-user/versioning/scripts/releasechecksnewmonth.sh >> /dev/null
+00      07      1       *       *                       /home/ec2-user/versioning/scripts/DDE-monthlyReleaseChecks.sh >> /dev/null
+	
+00      09      *       *       *                       /home/ec2-user/automation/rotations/DDE-check-rotations.sh >> /dev/null
+05      09      *       *       *                       /home/ec2-user/automation/rotations/DDE-check-passwords.sh >> /dev/null
+50      08      *       *       *                       /home/ec2-user/automation/TAGS/DDE-UAT-tags.sh >> /dev/null
+50      16      *       *       *                       /home/ec2-user/automation/vb_templates/vb_master_extract_UAT.sh >> /dev/null
+00      00      *       *       7                       /home/ec2-user/backups/script_backups.sh
+00      00      *       *       *                       /home/ec2-user/automation/aws_user_activity/aws_user_activity.sh >> /dev/null
+
+#IMDSv2 check on ec2 instances
+00      20      1       *       *                       /home/ec2-user/automation/imdsv2/imdsv2_ec2.sh >> /dev/null
+
+#testing section
+#12	10	*	*	1,2,3,4,5      /home/ec2-user/healthchecks/restartpods.sh >> ~/healthchecks/logs/ummh.txt
+
+# Data loads Sections
+00      07      *      *      7                    /home/ec2-user/automation/dataloads/DDE-EPX-master.sh
+50      04      *      *      7                    /home/ec2-user/automation/dataloads/DDE-VAS-CLEANUP.sh
+

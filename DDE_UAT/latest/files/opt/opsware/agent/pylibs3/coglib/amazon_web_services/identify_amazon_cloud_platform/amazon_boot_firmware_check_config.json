@@ -1,0 +1,9 @@
+[
+    {
+        "bios_vendor": "xen",
+        "bios_version": ".*amazon$"
+    },
+    {
+        "bios_vendor": "amazon ec2"
+    }
+]

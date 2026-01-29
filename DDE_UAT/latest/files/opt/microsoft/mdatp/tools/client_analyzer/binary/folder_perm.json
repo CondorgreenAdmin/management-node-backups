@@ -1,0 +1,45 @@
+{
+    "/var/log/microsoft/mdatp" : {
+        "perm" : 775,
+        "owner" : "root",
+        "group" : "mdatp"
+    },
+    "/var/log/microsoft/" : {
+        "perm" : 755,
+        "owner" : "root",
+        "group" : "root"
+    },
+    "/var/log/" : {
+        "perm" : "001"
+    },
+    "/var/" : {
+        "perm" : "001"
+    },
+    "var/opt/microsoft/mdatp/" : {
+        "perm" : 755,
+        "owner" : "root",
+        "group" : "root"
+    },
+    "var/opt/microsoft/" : {
+        "perm" : 755,
+        "owner" : "root",
+        "group" : "root"
+    },
+    "opt/microsoft/mdatp/log" : {
+        "perm" : 775,
+        "owner" : "root",
+        "group" : "mdatp",
+        "optional" : true
+    },
+    "opt/microsoft/mdatp/" : {
+        "perm" : 775,
+        "owner" : "root",
+        "group" : "root"
+    },
+    "etc/opt/microsoft/mdatp/" : {
+        "perm" : 755
+    },
+    "/etc/opt/microsoft/mdatp/" : {
+        "perm" : 755
+    }
+}

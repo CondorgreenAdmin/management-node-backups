@@ -1,0 +1,158 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dde-depl
+  labels:
+    app: dde
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dde
+  template:
+    metadata:
+      labels:
+        app: dde
+      annotations:
+        version: "1.5.0-704"
+    spec:
+      containers:
+        - name: dde
+          image: 835860129811.dkr.ecr.af-south-1.amazonaws.com/dev-dde:dde
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SERVICE_NAME
+              value: dde-service
+            - name: NODE_ENV
+              value: uat
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: MYSQL_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: host
+            - name: MYSQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: database
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: user
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: password
+            - name: NATS_CLIENT_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: NATS_URL
+              value: "http://nats-srv:4222"
+            - name: NATS_CLUSTER_ID
+              value: dde_app
+            # OAuth
+            - name: ORIGIN
+              valueFrom:
+                secretKeyRef:
+                  name: oauth-secret
+                  key: origin
+            - name: AUTHORIZATION_URL
+              valueFrom:
+                secretKeyRef:
+                  name: oauth-secret
+                  key: authorization_url
+            - name: LOGOUT_URL
+              valueFrom:
+                secretKeyRef:
+                  name: oauth-secret
+                  key: logout_url
+            - name: TOKEN_URL
+              valueFrom:
+                secretKeyRef:
+                  name: oauth-secret
+                  key: token_url
+            - name: CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: oauth-secret
+                  key: client_id
+            - name: CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: oauth-secret
+                  key: client_secret
+            #AWS S3      
+            - name: ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret
+                  key: accessKeyId
+            - name: SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret
+                  key: secretAccessKey
+            - name: REGION
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret
+                  key: region
+            - name: BUCKET
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret
+                  key: bucket
+            - name: FOLDER_SME
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret
+                  key: folderSme
+            - name: FOLDER_UNL
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret
+                  key: folderUnl
+            - name: FOLDER_DUMP
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret
+                  key: folderDump
+            #WCC
+            - name: WCC_URL
+              valueFrom:
+                secretKeyRef:
+                  name: wcc-secret
+                  key: wcc_url
+            - name: WCC_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: wcc-secret
+                  key: wcc_username
+            - name: WCC_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: wcc-secret
+                  key: wcc_password
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dde-serv
+spec:
+  selector:
+    app: dde
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: ClusterIP

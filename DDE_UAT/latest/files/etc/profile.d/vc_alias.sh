@@ -1,0 +1,25 @@
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias grep='grep --color=auto'
+alias l.='ls -d .* --color=auto'
+alias ll='ls -l --color=auto'
+alias ls='ls --color=auto'
+alias sctl='systemctl'
+#
+alias STstatus='/sysadm/linux/zactn04039/Workarea/STgetinfo.sh'
+alias workarea='cd /sysadm/linux/zactn04039/Workarea ; pwd'
+alias netbarea='cd /net/pnbu001zatcrh/software/Netbackup_Client ; pwd'
+#
+alias edir_gchk='/sysadm/linux/zactn04039/Workarea/sssd/check_edir_group.sh'
+alias edir_glst='/sysadm/linux/zactn04039/Workarea/sssd/list_edir_groups.sh'
+alias edir_uchk='/sysadm/linux/zactn04039/Workarea/sssd/check_edir_user.sh'
+alias edir_ulst='/sysadm/linux/zactn04039/Workarea/sssd/list_edir_users.sh'
+#
+alias user_audit='/sysadm/linux/zactn04039/Workarea/useraudit.pl'
+alias user_audit_email='/sysadm/linux/zactn04039/Workarea/sendaudit_email.sh'
+alias disk_audit='/sysadm/linux/zactn04039/Workarea/diskaudit.pl'
+alias bond_audit='/sysadm/linux/zactn04039/Workarea/bond_audit.pl'
+alias asm_audit='/sysadm/linux/zactn04039/Workarea/asmaudit.sh'
+alias storage_audit='/sysadm/linux/zactn04039/Workarea/storage_audit.sh'
+#
+alias scan_storage='/sysadm/linux/zactn04039/Workarea/scan_storage.sh'

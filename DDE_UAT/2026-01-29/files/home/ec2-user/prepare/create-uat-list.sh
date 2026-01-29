@@ -1,0 +1,1 @@
+mysql --defaults-extra-file=~/dde-sox.cnf --defaults-group-suffix=1 -e "SELECT ROUTINE_NAME FROM information_schema.ROUTINES WHERE ROUTINE_TYPE='PROCEDURE' AND ROUTINE_SCHEMA='DDE-prd' AND ROUTINE_NAME LIKE '%\_prepare\_%'" --batch --raw --skip-column-names | egrep -v "bkp|normali|adhoc"

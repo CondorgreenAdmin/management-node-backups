@@ -1,0 +1,206 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: loader-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: loader
+  template:
+    metadata:
+      labels:
+        app: loader
+      annotations:
+        version: "1.0.0-711"
+    spec:
+      containers:
+        - name: loader
+          image: 835860129811.dkr.ecr.af-south-1.amazonaws.com/dev-dde:loader
+          imagePullPolicy: Always
+          env:
+            - name: SERVICE_NAME
+              value: loader-service
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: NODE_ENV
+              value: uat
+            - name: LOG_LEVEL
+              value: debug
+            # Eppix Config
+            - name: EPPIX_SERVER
+              valueFrom:
+                secretKeyRef:
+                  name: eppix-secret
+                  key: server
+            - name: EPPIX_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: eppix-secret
+                  key: host
+            - name: EPPIX_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: eppix-secret
+                  key: database
+            - name: EPPIX_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: eppix-secret
+                  key: port
+            - name: EPPIX_USER
+              valueFrom:
+                secretKeyRef:
+                  name: eppix-secret
+                  key: user
+            - name: EPPIX_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: eppix-secret
+                  key: pass
+            # Siebel Config
+            - name: SIEBEL_SERVER
+              valueFrom:
+                secretKeyRef:
+                  name: siebel-secret
+                  key: server
+            - name: SIEBEL_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: siebel-secret
+                  key: host
+            - name: SIEBEL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: siebel-secret
+                  key: database
+            - name: SIEBEL_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: siebel-secret
+                  key: port
+            - name: SIEBEL_PROTOCOL
+              valueFrom:
+                secretKeyRef:
+                  name: siebel-secret
+                  key: protocol
+            - name: SIEBEL_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: siebel-secret
+                  key: user
+            - name: SIEBEL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: siebel-secret
+                  key: pass
+            - name: SIEBEL_CONNECTION_STRING
+              valueFrom:
+                secretKeyRef:
+                  name: siebel-secret
+                  key: connectionstring
+            # MySQL Config
+            - name: MYSQL_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: host
+            - name: MYSQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: database
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: user
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: password
+            - name: SMTP_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: mail-secret
+                  key: host
+            - name: SMTP_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: mail-secret
+                  key: port
+            - name: MAIL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mail-secret
+                  key: user
+            - name: MAIL_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: mail-secret
+                  key: pass
+            - name: MAIL_FROM
+              valueFrom:
+                secretKeyRef:
+                  name: mail-secret
+                  key: from
+            - name: LOAD_SUCCESS_EMAIL_RECIPIENTS
+              valueFrom:
+                secretKeyRef:
+                  name: mail-secret
+                  key: load_success_email_recipients
+            - name: LOAD_FAILURE_EMAIL_RECIPIENTS
+              valueFrom:
+                secretKeyRef:
+                  name: mail-secret
+                  key: load_failure_email_recipients
+            #AWS S3
+            - name: ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret
+                  key: accessKeyId
+            - name: SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret
+                  key: secretAccessKey
+            - name: REGION
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret
+                  key: region
+            - name: BUCKET
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret
+                  key: bucket
+            - name: FOLDER_SME
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret
+                  key: folderSme
+            - name: FOLDER_UNL
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret
+                  key: folderUnl
+            - name: FOLDER_DUMP
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret
+                  key: folderDump
+            #NATS            
+            - name: NATS_CLIENT_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: NATS_URL
+              value: "http://nats-srv:4222"
+            - name: NATS_CLUSTER_ID
+              value: dde_app
+            - name: REDIS_HOST
+              value: loader-redis-srv

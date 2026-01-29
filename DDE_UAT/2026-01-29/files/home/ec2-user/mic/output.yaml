@@ -1,0 +1,97 @@
+Name:           aws-node
+Selector:       k8s-app=aws-node
+Node-Selector:  <none>
+Labels:         app.kubernetes.io/instance=aws-vpc-cni
+                app.kubernetes.io/name=aws-node
+                app.kubernetes.io/version=v1.11.4
+                k8s-app=aws-node
+Annotations:    deprecated.daemonset.template.generation: 2
+Desired Number of Nodes Scheduled: 2
+Current Number of Nodes Scheduled: 2
+Number of Nodes Scheduled with Up-to-date Pods: 2
+Number of Nodes Scheduled with Available Pods: 2
+Number of Nodes Misscheduled: 0
+Pods Status:  2 Running / 0 Waiting / 0 Succeeded / 0 Failed
+Pod Template:
+  Labels:           app.kubernetes.io/instance=aws-vpc-cni
+                    app.kubernetes.io/name=aws-node
+                    k8s-app=aws-node
+  Service Account:  aws-node
+  Init Containers:
+   aws-vpc-cni-init:
+    Image:      877085696533.dkr.ecr.af-south-1.amazonaws.com/amazon-k8s-cni-init:v1.19.2-eksbuild.1
+    Port:       <none>
+    Host Port:  <none>
+    Environment:
+      DISABLE_TCP_EARLY_DEMUX:  false
+      ENABLE_IPv6:              false
+    Mounts:
+      /host/opt/cni/bin from cni-bin-dir (rw)
+  Containers:
+   aws-node:
+    Image:      877085696533.dkr.ecr.af-south-1.amazonaws.com/amazon-k8s-cni:v1.19.2-eksbuild.1
+    Port:       61678/TCP
+    Host Port:  61678/TCP
+    Requests:
+      cpu:      25m
+    Liveness:   exec [/app/grpc-health-probe -addr=:50051 -connect-timeout=5s -rpc-timeout=5s] delay=60s timeout=10s period=10s #success=1 #failure=3
+    Readiness:  exec [/app/grpc-health-probe -addr=:50051 -connect-timeout=5s -rpc-timeout=5s] delay=1s timeout=10s period=10s #success=1 #failure=3
+    Environment:
+      ADDITIONAL_ENI_TAGS:                    {}
+      AWS_VPC_CNI_NODE_PORT_SUPPORT:          true
+      AWS_VPC_ENI_MTU:                        9001
+      AWS_VPC_K8S_CNI_CONFIGURE_RPFILTER:     false
+      AWS_VPC_K8S_CNI_CUSTOM_NETWORK_CFG:     false
+      AWS_VPC_K8S_CNI_EXTERNALSNAT:           false
+      AWS_VPC_K8S_CNI_LOGLEVEL:               DEBUG
+      AWS_VPC_K8S_CNI_LOG_FILE:               /host/var/log/aws-routed-eni/ipamd.log
+      AWS_VPC_K8S_CNI_RANDOMIZESNAT:          prng
+      AWS_VPC_K8S_CNI_VETHPREFIX:             eni
+      AWS_VPC_K8S_PLUGIN_LOG_FILE:            /var/log/aws-routed-eni/plugin.log
+      AWS_VPC_K8S_PLUGIN_LOG_LEVEL:           DEBUG
+      DISABLE_INTROSPECTION:                  false
+      DISABLE_METRICS:                        false
+      DISABLE_NETWORK_RESOURCE_PROVISIONING:  false
+      ENABLE_IPv4:                            true
+      ENABLE_IPv6:                            false
+      ENABLE_POD_ENI:                         false
+      ENABLE_PREFIX_DELEGATION:               false
+      WARM_ENI_TARGET:                        1
+      WARM_PREFIX_TARGET:                     1
+      MY_NODE_NAME:                            (v1:spec.nodeName)
+    Mounts:
+      /host/etc/cni/net.d from cni-net-dir (rw)
+      /host/opt/cni/bin from cni-bin-dir (rw)
+      /host/var/log/aws-routed-eni from log-dir (rw)
+      /run/xtables.lock from xtables-lock (rw)
+      /var/run/aws-node from run-dir (rw)
+      /var/run/dockershim.sock from dockershim (rw)
+  Volumes:
+   cni-bin-dir:
+    Type:          HostPath (bare host directory volume)
+    Path:          /opt/cni/bin
+    HostPathType:  
+   cni-net-dir:
+    Type:          HostPath (bare host directory volume)
+    Path:          /etc/cni/net.d
+    HostPathType:  
+   dockershim:
+    Type:          HostPath (bare host directory volume)
+    Path:          /var/run/dockershim.sock
+    HostPathType:  
+   log-dir:
+    Type:          HostPath (bare host directory volume)
+    Path:          /var/log/aws-routed-eni
+    HostPathType:  DirectoryOrCreate
+   run-dir:
+    Type:          HostPath (bare host directory volume)
+    Path:          /var/run/aws-node
+    HostPathType:  DirectoryOrCreate
+   xtables-lock:
+    Type:               HostPath (bare host directory volume)
+    Path:               /run/xtables.lock
+    HostPathType:       
+  Priority Class Name:  system-node-critical
+  Node-Selectors:       <none>
+  Tolerations:          op=Exists
+Events:                 <none>

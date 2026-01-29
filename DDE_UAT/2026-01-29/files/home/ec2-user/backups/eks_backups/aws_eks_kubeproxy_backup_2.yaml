@@ -1,0 +1,124 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  annotations:
+    deprecated.daemonset.template.generation: "3"
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"apps/v1","kind":"DaemonSet","metadata":{"annotations":{"deprecated.daemonset.template.generation":"2"},"creationTimestamp":"2023-01-18T06:32:42Z","generation":2,"labels":{"eks.amazonaws.com/component":"kube-proxy","k8s-app":"kube-proxy"},"name":"kube-proxy","namespace":"kube-system","resourceVersion":"171455955","uid":"30f36147-a9e9-41ab-aed5-2c25bedeb216"},"spec":{"revisionHistoryLimit":10,"selector":{"matchLabels":{"k8s-app":"kube-proxy"}},"template":{"metadata":{"creationTimestamp":null,"labels":{"k8s-app":"kube-proxy"}},"spec":{"affinity":{"nodeAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":{"nodeSelectorTerms":[{"matchExpressions":[{"key":"kubernetes.io/os","operator":"In","values":["linux"]},{"key":"kubernetes.io/arch","operator":"In","values":["amd64","arm64"]},{"key":"eks.amazonaws.com/compute-type","operator":"NotIn","values":["fargate"]}]}]}}},"containers":[{"command":["kube-proxy","--v=2","--config=/var/lib/kube-proxy-config/config","--hostname-override=$(NODE_NAME)"],"env":[{"name":"NODE_NAME","valueFrom":{"fieldRef":{"apiVersion":"v1","fieldPath":"spec.nodeName"}}}],"image":"877085696533.dkr.ecr.af-south-1.amazonaws.com/eks/kube-proxy:v1.32.0-eksbuild.2","imagePullPolicy":"IfNotPresent","name":"kube-proxy","resources":{"requests":{"cpu":"100m"}},"securityContext":{"privileged":true},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","volumeMounts":[{"mountPath":"/var/log","name":"varlog"},{"mountPath":"/run/xtables.lock","name":"xtables-lock"},{"mountPath":"/lib/modules","name":"lib-modules","readOnly":true},{"mountPath":"/var/lib/kube-proxy/","name":"kubeconfig"},{"mountPath":"/var/lib/kube-proxy-config/","name":"config"}]}],"dnsPolicy":"ClusterFirst","hostNetwork":true,"priorityClassName":"system-node-critical","restartPolicy":"Always","schedulerName":"default-scheduler","securityContext":{},"serviceAccount":"kube-proxy","serviceAccountName":"kube-proxy","terminationGracePeriodSeconds":30,"tolerations":[{"operator":"Exists"}],"volumes":[{"hostPath":{"path":"/var/log","type":""},"name":"varlog"},{"hostPath":{"path":"/run/xtables.lock","type":"FileOrCreate"},"name":"xtables-lock"},{"hostPath":{"path":"/lib/modules","type":""},"name":"lib-modules"},{"configMap":{"defaultMode":420,"name":"kube-proxy"},"name":"kubeconfig"},{"configMap":{"defaultMode":420,"name":"kube-proxy-config"},"name":"config"}]}},"updateStrategy":{"rollingUpdate":{"maxSurge":0,"maxUnavailable":"10%"},"type":"RollingUpdate"}},"status":{"currentNumberScheduled":2,"desiredNumberScheduled":2,"numberAvailable":2,"numberMisscheduled":0,"numberReady":2,"observedGeneration":2,"updatedNumberScheduled":2}}
+  creationTimestamp: "2023-01-18T06:32:42Z"
+  generation: 3
+  labels:
+    eks.amazonaws.com/component: kube-proxy
+    k8s-app: kube-proxy
+  name: kube-proxy
+  namespace: kube-system
+  resourceVersion: "173795739"
+  uid: 30f36147-a9e9-41ab-aed5-2c25bedeb216
+spec:
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      k8s-app: kube-proxy
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        k8s-app: kube-proxy
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/os
+                operator: In
+                values:
+                - linux
+              - key: kubernetes.io/arch
+                operator: In
+                values:
+                - amd64
+                - arm64
+              - key: eks.amazonaws.com/compute-type
+                operator: NotIn
+                values:
+                - fargate
+      containers:
+      - command:
+        - kube-proxy
+        - --v=2
+        - --config=/var/lib/kube-proxy-config/config
+        - --hostname-override=$(NODE_NAME)
+        env:
+        - name: NODE_NAME
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: spec.nodeName
+        image: 877085696533.dkr.ecr.af-south-1.amazonaws.com/eks/kube-proxy:v1.29.10-eksbuild.3
+        imagePullPolicy: IfNotPresent
+        name: kube-proxy
+        resources:
+          requests:
+            cpu: 100m
+        securityContext:
+          privileged: true
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /var/log
+          name: varlog
+        - mountPath: /run/xtables.lock
+          name: xtables-lock
+        - mountPath: /lib/modules
+          name: lib-modules
+          readOnly: true
+        - mountPath: /var/lib/kube-proxy/
+          name: kubeconfig
+        - mountPath: /var/lib/kube-proxy-config/
+          name: config
+      dnsPolicy: ClusterFirst
+      hostNetwork: true
+      priorityClassName: system-node-critical
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      serviceAccount: kube-proxy
+      serviceAccountName: kube-proxy
+      terminationGracePeriodSeconds: 30
+      tolerations:
+      - operator: Exists
+      volumes:
+      - hostPath:
+          path: /var/log
+          type: ""
+        name: varlog
+      - hostPath:
+          path: /run/xtables.lock
+          type: FileOrCreate
+        name: xtables-lock
+      - hostPath:
+          path: /lib/modules
+          type: ""
+        name: lib-modules
+      - configMap:
+          defaultMode: 420
+          name: kube-proxy
+        name: kubeconfig
+      - configMap:
+          defaultMode: 420
+          name: kube-proxy-config
+        name: config
+  updateStrategy:
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 10%
+    type: RollingUpdate
+status:
+  currentNumberScheduled: 2
+  desiredNumberScheduled: 2
+  numberAvailable: 2
+  numberMisscheduled: 0
+  numberReady: 2
+  observedGeneration: 3
+  updatedNumberScheduled: 2
