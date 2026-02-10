@@ -911,6 +911,7 @@
 39f02871f3f5d9133ca5f3fa161d8452291c2f4d27376bd13025b73b8c2c8c7a  files/usr/local/aws-cli/v2/2.17.51/dist/awscli/botocore/data/cloudwatch/2010-08-01/paginators-1.json
 3a069f6e2a489698d51377b0878765e4707b3fdf948938462d70303c4b00f8d6  files/opt/microsoft/mdatp/conf/scripts/tvm/no_ufw.sh
 3a153d115d2da359c8bf26f04653e679d7d7c4f39c3a36f4f1d2168552326415  files/home/ec2-user/automation/dataloads/DDE-EPX-ingest.sh
+3a34b31bcf7081842f9907a6c815ef34b69d26c0a3b47429406508c8a5a924b6  files/home/ec2-user/backups/github_backups/github_backup.sh
 3a3761bf9cb5b89bd95eb48a50b917f54d5e0a983e4f6c2bc1ea427e0c9bcf46  files/home/ec2-user/aws/dist/awscli/botocore/data/workmail/2017-10-01/completions-1.json
 3a3761bf9cb5b89bd95eb48a50b917f54d5e0a983e4f6c2bc1ea427e0c9bcf46  files/usr/local/aws-cli/v2/2.17.51/dist/awscli/botocore/data/workmail/2017-10-01/completions-1.json
 3a71d1e6ddc792ca17cd510cf94ac03b92f796a1c4fefbaef1188c1215d2a864  files/home/ec2-user/automation/dataloads/DDE-EPX-master.sh
@@ -1602,7 +1603,6 @@
 6a0a042951d9ba58b1d13f4f6109e7aaf0ac42d77802d7aa5dc79d16427d786c  files/home/ec2-user/backups/backups_2_github_repo/important/versioning/sp_deployments/archive_downloaded/downloaded_20251012_200035/package.json
 6a0a042951d9ba58b1d13f4f6109e7aaf0ac42d77802d7aa5dc79d16427d786c  files/home/ec2-user/versioning/sp_deployments/archive_downloaded/downloaded_20251012_200035/package.json
 6ad422322c645704cc70e19451708f18cc6ddfb7ca9098076f4099f123b00545  files/etc/opt/opsware/agent/security.conf
-6ad847e692064520f7b8f1c8d7f58b5187cf4298653962452453e4dc11d8c1d4  files/home/ec2-user/backups/github_backups/github_backup.sh
 6ae37e49620c74ecc8b53cd37f7fc985d19a47347ed8fa2110b7fe34a0d6a500  files/home/ec2-user/eks-config/clusterrole.yaml
 6ae5a1f75cc064a10a453034a9d0d203f79ebde2a6140a87db405d11ddf033a3  files/home/ec2-user/aws/dist/awscli/botocore/data/apigatewayv2/2018-11-29/paginators-1.json
 6ae5a1f75cc064a10a453034a9d0d203f79ebde2a6140a87db405d11ddf033a3  files/usr/local/aws-cli/v2/2.17.51/dist/awscli/botocore/data/apigatewayv2/2018-11-29/paginators-1.json
