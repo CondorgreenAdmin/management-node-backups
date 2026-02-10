@@ -1,7 +1,0 @@
-[client]
-user=admin
-password=C0ndorgre3n_1.41421!
-host=dopa-dde-uat.cluster-cpvup49vxg3r.af-south-1.rds.amazonaws.com
-database=DDE-prd
-ssl-ca=/home/ec2-user/global-rds-bundle.pem
-ssl-mode=REQUIRED
