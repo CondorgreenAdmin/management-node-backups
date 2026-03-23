@@ -1,0 +1,510 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-depl
+  labels:
+    app: api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      containers:
+        - name: api
+          image: 211125559653.dkr.ecr.af-south-1.amazonaws.com/nonprod_pfp_ecr:api
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 9000
+          env:
+            - name: SERVICE_NAME
+              value: api-service
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            # General Config
+            - name: ENV
+              valueFrom:
+                secretKeyRef:
+                  name: general-config-secret
+                  key: env
+            - name: PORT
+              valueFrom:
+                secretKeyRef:
+                  name: general-config-secret
+                  key: port # If you change this port value then containerPort and targetPort in this file should be changed as well
+            - name: SCHEME
+              valueFrom:
+                secretKeyRef:
+                  name: general-config-secret
+                  key: scheme
+            - name: HOSTNAME
+              valueFrom:
+                secretKeyRef:
+                  name: general-config-secret
+                  key: hostname
+            - name: BASE_PATH
+              valueFrom:
+                secretKeyRef:
+                  name: general-config-secret
+                  key: basePath
+            - name: OTP_SECRET_LENGTH
+              valueFrom:
+                secretKeyRef:
+                  name: general-config-secret
+                  key: otpSecretLength
+            - name: OTP_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: general-config-secret
+                  key: otpSecret
+            - name: COOKIE_SECRET_LENGTH
+              valueFrom:
+                secretKeyRef:
+                  name: general-config-secret
+                  key: cookieSecretLength
+            - name: COOKIE_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: general-config-secret
+                  key: cookieSecret
+            - name: PARTNER_COOKIE
+              valueFrom:
+                secretKeyRef:
+                  name: general-config-secret
+                  key: partnerCookie
+            - name: VC_ORIGIN
+              valueFrom:
+                secretKeyRef:
+                  name: general-config-secret
+                  key: vcOrigin
+            - name: VC_BASE_PATH
+              valueFrom:
+                secretKeyRef:
+                  name: general-config-secret
+                  key: vcBasePath
+            # Vumatel
+            - name: VUMATEL_BASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: vumatel-secret
+                  key: baseURL
+            - name: VUMATEL_BASE_PATH
+              valueFrom:
+                secretKeyRef:
+                  name: vumatel-secret
+                  key: basePath
+            - name: VUMATEL_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: vumatel-secret
+                  key: apiKey
+            - name: VUMATEL_PAYMENT_REDIRECT_URL
+              valueFrom:
+                secretKeyRef:
+                  name: vumatel-secret
+                  key: paymentRedirectURL
+            # Openserve
+            - name: OPENSERVE_BASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: openserve-secret
+                  key: baseURL
+            - name: OPENSERVE_BASE_PATH
+              valueFrom:
+                secretKeyRef:
+                  name: openserve-secret
+                  key: basePath
+            - name: OPENSERVE_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: openserve-secret
+                  key: apiKey
+            # Google Maps
+            - name: GOOGLE_MAPS_BASE_PATH
+              valueFrom:
+                secretKeyRef:
+                  name: google-maps-secret
+                  key: basePath
+            - name: GOOGLE_MAPS_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: google-maps-secret
+                  key: apiKey
+            # MySQL
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: user
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: password
+            - name: MYSQL_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: host
+            - name: MYSQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: database
+            - name: MYSQL_CONNECTION_LIMIT
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: connectionLimit
+            - name: MYSQL_MULTIPLE_STATEMENTS
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: multipleStatements
+            # UIM
+            - name: VC_UIM_ORIGIN
+              valueFrom:
+                secretKeyRef:
+                  name: uim-secret
+                  key: origin
+            - name: VC_UIM_BASE_PATH
+              valueFrom:
+                secretKeyRef:
+                  name: uim-secret
+                  key: basePath
+            - name: VC_UIM_SMS_SERVICE_ENDPOINT
+              valueFrom:
+                secretKeyRef:
+                  name: uim-secret
+                  key: smsServiceEndpoint
+            - name: VC_UIM_AUTH_SERVICE_ENDPOINT
+              valueFrom:
+                secretKeyRef:
+                  name: uim-secret
+                  key: authServiceEndpoint
+            - name: VC_UIM_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: uim-secret
+                  key: username
+            - name: VC_UIM_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: uim-secret
+                  key: password
+            - name: VC_UIM_SOURCE_ID
+              valueFrom:
+                secretKeyRef:
+                  name: uim-secret
+                  key: sourceId
+            - name: VC_UIM_MESSAGE_TYPE_ID
+              valueFrom:
+                secretKeyRef:
+                  name: uim-secret
+                  key: messageTypeId
+            - name: VC_UIM_EMAIL_SERVICE_ENDPOINT
+              valueFrom:
+                secretKeyRef:
+                  name: uim-secret
+                  key: emailServiceEndpoint
+            - name: VC_UIM_EMAIL_MESSAGE_TYPE_ID
+              valueFrom:
+                secretKeyRef:
+                  name: uim-secret
+                  key: emailMessageTypeId
+                  optional: true
+            - name: VC_UIM_EMAIL_OTP_TEMPLATE_ID
+              valueFrom:
+                secretKeyRef:
+                  name: uim-secret
+                  key: emailOtpTemplateId
+                  optional: true
+            # JWT
+            - name: JWT_SECRET_LENGTH
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: secretLength
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: secret
+            - name: JWT_TTL
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: ttl
+            - name: JWT_PRIVATE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: privateKey
+            - name: JWT_PUBLIC_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: publicKey
+            # OAUTH
+            - name: OAUTH_STATE_COOKIE
+              valueFrom:
+                secretKeyRef:
+                  name: oauth-secret
+                  key: stateCookie
+            - name: OAUTH_CODE_VERIFIER_COOKIE
+              valueFrom:
+                secretKeyRef:
+                  name: oauth-secret
+                  key: codeVerifierCookie
+            - name: OAUTH_AUTHORIZATION_URL
+              valueFrom:
+                secretKeyRef:
+                  name: oauth-secret
+                  key: authURL
+            - name: OAUTH_TOKEN_EXCHANGE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: oauth-secret
+                  key: tokenExchangeURL
+            - name: OAUTH_CALLBACK_URL
+              valueFrom:
+                secretKeyRef:
+                  name: oauth-secret
+                  key: callbackURL
+            - name: OAUTH_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: oauth-secret
+                  key: clientID
+            - name: OAUTH_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: oauth-secret
+                  key: clientSecret
+            - name: OAUTH_SCOPE
+              valueFrom:
+                secretKeyRef:
+                  name: oauth-secret
+                  key: scope
+            - name: OAUTH_ACCESS_TOKEN_COOKIE
+              valueFrom:
+                secretKeyRef:
+                  name: oauth-secret
+                  key: accessToken
+            - name: OAUTH_SUCCESS_REDIRECT
+              valueFrom:
+                secretKeyRef:
+                  name: oauth-secret
+                  key: successRedirect
+            - name: OAUTH_FAILURE_REDIRECT
+              valueFrom:
+                secretKeyRef:
+                  name: oauth-secret
+                  key: failureRedirect
+            - name: OAUTH_LOGOUT_REDIRECT
+              valueFrom:
+                secretKeyRef:
+                  name: oauth-secret
+                  key: logoutRedirect
+            # FMW OSS
+            - name: FMW_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: fmw-secret
+                  key: username
+            - name: FMW_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: fmw-secret
+                  key: password
+            - name: FMW_ORIGIN_QUERY_SR
+              valueFrom:
+                secretKeyRef:
+                  name: fmw-secret
+                  key: originQuerySR
+            - name: FMW_ORIGIN_CREATE_SR
+              valueFrom:
+                secretKeyRef:
+                  name: fmw-secret
+                  key: originCreateSR
+            - name: FMW_QUERY_SR_ENDPOINT
+              valueFrom:
+                secretKeyRef:
+                  name: fmw-secret
+                  key: querySREndpoint
+            - name: FMW_CREATE_SR_ENDPOINT
+              valueFrom:
+                secretKeyRef:
+                  name: fmw-secret
+                  key: createSREndpoint
+            - name: FMW_QUERY_SR_BASE_PATH
+              valueFrom:
+                secretKeyRef:
+                  name: fmw-secret
+                  key: querySRBasePath
+            - name: FMW_CREATE_SR_BASE_PATH
+              valueFrom:
+                secretKeyRef:
+                  name: fmw-secret
+                  key: createSRBasePath
+            # FMW CSS
+            - name: FMW_CSS_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: fmw-secret
+                  key: cssUsername
+            - name: FMW_CSS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: fmw-secret
+                  key: cssPassword
+            - name: FMW_CSS_ORIGIN
+              valueFrom:
+                secretKeyRef:
+                  name: fmw-secret
+                  key: cssOrigin
+            - name: FMW_CSS_BASE_PATH
+              valueFrom:
+                secretKeyRef:
+                  name: fmw-secret
+                  key: cssBasePath
+            - name: FMW_CSS_INVOICE_ENDPOINT
+              valueFrom:
+                secretKeyRef:
+                  name: fmw-secret
+                  key: cssInvoiceEndpoint
+            # NATS
+            - name: NATS_CLIENT_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: NATS_URL
+              value: "http://nats-srv:4222"
+            - name: NATS_CLUSTER_ID
+              value: vumareach_app
+            # AWS
+            - name: AWS_S3_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret
+                  key: accessKeyID
+            - name: AWS_S3_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret
+                  key: secretAccessKey
+            - name: AWS_S3_BUCKET
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret
+                  key: bucket
+            - name: CLOUDWATCH_LOG_GROUP
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret
+                  key: cloudwatchLogGroup
+            - name: CLOUDWATCH_LOG_STREAM
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret
+                  key: cloudwatchLogStream
+            - name: AWS_REGION
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret
+                  key: region
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret
+                  key: accessKeyID
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret
+                  key: secretAccessKey
+            # AWS SQS (Webhook Polling)
+            - name: AWS_SQS_QUEUE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret
+                  key: sqsQueueURL
+                  optional: true
+            - name: AWS_SQS_MAX_MESSAGES
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret
+                  key: sqsMaxMessages
+                  optional: true
+            - name: AWS_SQS_VISIBILITY_TIMEOUT
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret
+                  key: sqsVisibilityTimeout
+                  optional: true
+            - name: AWS_SQS_WAIT_TIME
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret
+                  key: sqsWaitTime
+                  optional: true
+            # AFRIGIS
+            - name: AFRIGIS_ORIGIN
+              valueFrom:
+                secretKeyRef:
+                  name: afrigis-secret
+                  key: origin
+            - name: AFRIGIS_BASE_PATH
+              valueFrom:
+                secretKeyRef:
+                  name: afrigis-secret
+                  key: basePath
+            - name: AFRIGIS_OAUTH_ENDPOINT
+              valueFrom:
+                secretKeyRef:
+                  name: afrigis-secret
+                  key: oauthEndpoint
+            - name: AFRIGIS_AUTOCOMPLETE_ENDPOINT
+              valueFrom:
+                secretKeyRef:
+                  name: afrigis-secret
+                  key: autocompleteEndpoint
+            - name: AFRIGIS_PLACES_DETAILS_ENDPOINT
+              valueFrom:
+                secretKeyRef:
+                  name: afrigis-secret
+                  key: placesDetailsEndpoint
+            - name: AFRIGIS_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: afrigis-secret
+                  key: clientID
+            - name: AFRIGIS_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: afrigis-secret
+                  key: clientSecret
+            - name: AFRIGIS_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: afrigis-secret
+                  key: apikey
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-serv
+spec:
+  selector:
+    app: api
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 9000
+  type: ClusterIP

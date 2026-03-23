@@ -1,0 +1,13 @@
+#min	#hour	#?	#?	#DayOfWeek(0, 7=Sunday)	#command
+00	09	*	*	1,2,3,4,5		/home/ec2-user/healthchecks/vuma-healthchecks.sh >> /dev/null
+05      09      *       *       1,2,3,4,5               /home/ec2-user/SOX/VUMA-SOX-Roles-DBAdmins-report.sh >> /dev/null
+45      08      *       *       1,2,3,4,5               /home/ec2-user/automation/TAGS/PFP-NONPROD-tags.sh >> /dev/null
+40      08      *       *       1,2,3,4,5               /home/ec2-user/automation/rotations/PFP-check-passwords.sh >> /dev/null
+42      08      *       *       1,2,3,4,5               /home/ec2-user/automation/rotations/PFP-check-rotations.sh >> /dev/null
+00      00      *       *       *                       /home/ec2-user/automation/aws_user_activity/aws_user_activity.sh > /dev/null
+
+#Back up script
+00      00      *       *       7                       /home/ec2-user/backups/script_backups.sh >> /dev/null
+
+#IMDSv2 check on ec2 instances
+00      20      1       *       *                       /home/ec2-user/automation/imdsv2/imdsv2_ec2.sh >> /dev/null

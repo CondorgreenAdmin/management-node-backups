@@ -1,0 +1,7 @@
+[client]
+user=prod_pfp_appuser
+password="P@ssw0rd"
+host=prod-pfp-rds-cluster.cluster-crw4kugw2v64.af-south-1.rds.amazonaws.com
+database=prd_pfp_crm
+ssl-ca=/home/ec2-user/af-south-1-bundle-rds-bundle.pem
+ssl-mode=VERIFY_CA

@@ -1,0 +1,5 @@
+[client]
+user=ReadOnly
+host=nonprod-prepaid-fibre-cluster.cluster-clygu084e4v4.af-south-1.rds.amazonaws.com
+database=uat_pfp_crm
+password=m2Lr6FeKpj%LfJB3_X_P

@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: bpclient-depl
+    labels:
+        app: bpclient
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: bpclient
+    template:
+        metadata:
+            labels:
+                app: bpclient
+        spec:
+            containers:
+                - name: bpclient
+                  image: 211125559653.dkr.ecr.af-south-1.amazonaws.com/nonprod_pfp_ecr:bpclient
+                  imagePullPolicy: Always
+                  ports:
+                      - containerPort: 80
+                  env:
+                      - name: REACT_APP_BASE_URL
+                        valueFrom:
+                            secretKeyRef:
+                                name: general-config-secret
+                                key: basePath
+# test
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: bpclient-serv
+spec:
+    selector:
+        app: bpclient
+    ports:
+        - protocol: TCP
+          port: 80
+          targetPort: 80
+    type: ClusterIP

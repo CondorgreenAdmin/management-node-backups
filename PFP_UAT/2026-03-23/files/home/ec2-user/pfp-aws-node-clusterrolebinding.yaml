@@ -1,0 +1,22 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  creationTimestamp: "2024-07-22T11:31:25Z"
+  labels:
+    app.kubernetes.io/instance: aws-vpc-cni
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: aws-node
+    app.kubernetes.io/version: v1.19.2
+    helm.sh/chart: aws-vpc-cni-1.19.2
+    k8s-app: aws-node
+  name: aws-node
+  resourceVersion: "56649127"
+  uid: 26931d31-aa6e-4102-8f78-1a973e1f0fdd
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: aws-node
+subjects:
+- kind: ServiceAccount
+  name: aws-node
+  namespace: kube-system

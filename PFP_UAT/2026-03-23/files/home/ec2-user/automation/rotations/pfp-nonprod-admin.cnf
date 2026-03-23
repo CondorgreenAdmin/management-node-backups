@@ -1,0 +1,5 @@
+[client]
+user=nonprod_pfp_appuser
+password="WDHoGB45rSU@SV3M@Ji7"
+host=nonprod-prepaid-fibre-cluster.cluster-clygu084e4v4.af-south-1.rds.amazonaws.com
+database=pfp_uat

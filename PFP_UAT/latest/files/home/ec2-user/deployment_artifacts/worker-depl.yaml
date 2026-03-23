@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: worker
+  template:
+    metadata:
+      labels:
+        app: worker
+    spec:
+      containers:
+        - name: worker
+          image: 211125559653.dkr.ecr.af-south-1.amazonaws.com/nonprod_pfp_ecr:worker
+          imagePullPolicy: Always
+          env:
+            - name: NODE_ENV
+              value: local
+            - name: LOG_LEVEL
+              value: info
+            - name: SERVICE_NAME
+              value: worker-service
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: NATS_CLIENT_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: NATS_URL
+              value: "http://nats-srv:4222"
+            - name: NATS_CLUSTER_ID
+              value: vumareach_app
+            - name: REDIS_HOST
+              value: worker-redis-srv
+            # AWS Config
+            - name: ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret
+                  key: accessKeyID
+            - name: SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret
+                  key: secretAccessKey
+            - name: REGION
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret
+                  key: region
+            - name: BUCKET
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret
+                  key: bucket
+            - name: FOLDER_INVOICE
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret
+                  key: folderInvoice

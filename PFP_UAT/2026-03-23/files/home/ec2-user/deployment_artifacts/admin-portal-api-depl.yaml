@@ -1,0 +1,268 @@
+# Admin Portal API deployment (UAT).
+# Secrets:
+#   admin-portal-oauth-secret – OAuth/SSO (see keys below). Create this secret for admin portal only.
+#   mysql-secret, jwt-secret, general-config-secret, aws-secret, uim-secret – same as main API (shared DB and services).
+#   aws-secret must include key adminPortalLogStream (e.g. admin-portal-api) for CloudWatch log stream.
+#
+# OAuth secret keys (admin-portal-oauth-secret, from OAuth team):
+#   clientID:          7e338590-df68-4214-9b8a-3a9d70bb952f
+#   clientSecret:      (from OAuth team)
+#   callbackURL:       Must match the URL where this API is reached AND what is registered in NAM.
+#                       If portal is at pfpqa.vodacom.corp: https://pfpqa.vodacom.corp/fibre/prepaid/admin/api/auth/oauth/callback
+#                       If at wwwqa: https://wwwqa.vodacom.co.za/fibre/prepaid/admin/api/auth/oauth/callback
+#   authURL:           (IdP authorization URL from OAuth team)
+#   tokenExchangeURL:  (IdP token URL from OAuth team)
+#   scope:             openid (or as specified by OAuth team)
+#   stateCookie:       admin_oauth_state
+#   codeVerifierCookie: admin_oauth_code_verifier
+#   successRedirect:   Base URL of the admin portal client (where user lands after login). Must match the host users use.
+#                       If portal is at pfpqa.vodacom.corp: https://pfpqa.vodacom.corp/fibre/prepaid/admin
+#                       If at wwwqa: https://wwwqa.vodacom.co.za/fibre/prepaid/admin
+#   failureRedirect:   Login page URL. Same host as successRedirect, e.g. .../fibre/prepaid/admin/login
+#   cookieSecret:      (random string for signing cookies)
+#
+# kubectl create secret generic admin-portal-oauth-secret \
+#   --from-literal=clientID='7e338590-df68-4214-9b8a-3a9d70bb952f' \
+#   --from-literal=clientSecret='<FROM_OAUTH_TEAM>' \
+#   --from-literal=callbackURL='https://pfpqa.vodacom.corp/fibre/prepaid/admin/api/auth/oauth/callback' \
+#   --from-literal=authURL='<IDP_AUTHZ_URL>' \
+#   --from-literal=tokenExchangeURL='<IDP_TOKEN_URL>' \
+#   --from-literal=scope='openid' \
+#   --from-literal=stateCookie='admin_oauth_state' \
+#   --from-literal=codeVerifierCookie='admin_oauth_code_verifier' \
+#   --from-literal=successRedirect='https://pfpqa.vodacom.corp/fibre/prepaid/admin' \
+#   --from-literal=failureRedirect='https://pfpqa.vodacom.corp/fibre/prepaid/admin/login' \
+#   --from-literal=cookieSecret='<RANDOM_STRING>'
+# NAM must have the same callbackURL registered as redirect_uri for this client.
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: admin-portal-api-depl
+  labels:
+    app: admin-portal-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: admin-portal-api
+  template:
+    metadata:
+      labels:
+        app: admin-portal-api
+    spec:
+      containers:
+        - name: admin-portal-api
+          image: 211125559653.dkr.ecr.af-south-1.amazonaws.com/nonprod_pfp_ecr:admin-portal-api-450
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 9001
+          env:
+            - name: PORT
+              value: "9001"
+            - name: BASE_PATH
+              value: "/fibre/prepaid/admin/api"
+            - name: OAUTH_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: admin-portal-oauth-secret
+                  key: clientID
+            - name: OAUTH_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: admin-portal-oauth-secret
+                  key: clientSecret
+            - name: OAUTH_CALLBACK_URL
+              valueFrom:
+                secretKeyRef:
+                  name: admin-portal-oauth-secret
+                  key: callbackURL
+            - name: OAUTH_AUTHORIZATION_URL
+              valueFrom:
+                secretKeyRef:
+                  name: admin-portal-oauth-secret
+                  key: authURL
+            - name: OAUTH_TOKEN_EXCHANGE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: admin-portal-oauth-secret
+                  key: tokenExchangeURL
+            - name: OAUTH_SCOPE
+              valueFrom:
+                secretKeyRef:
+                  name: admin-portal-oauth-secret
+                  key: scope
+            - name: OAUTH_STATE_COOKIE
+              valueFrom:
+                secretKeyRef:
+                  name: admin-portal-oauth-secret
+                  key: stateCookie
+            - name: OAUTH_CODE_VERIFIER_COOKIE
+              valueFrom:
+                secretKeyRef:
+                  name: admin-portal-oauth-secret
+                  key: codeVerifierCookie
+            - name: OAUTH_SUCCESS_REDIRECT
+              valueFrom:
+                secretKeyRef:
+                  name: admin-portal-oauth-secret
+                  key: successRedirect
+            - name: OAUTH_FAILURE_REDIRECT
+              valueFrom:
+                secretKeyRef:
+                  name: admin-portal-oauth-secret
+                  key: failureRedirect
+            - name: COOKIE_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: admin-portal-oauth-secret
+                  key: cookieSecret
+            - name: OAUTH_CLAIM_USERNAME
+              value: "preferred_username"
+            # Default role when NAM sends no role (only super_admin comes from NAM; others get this)
+            - name: OAUTH_DEFAULT_ROLE_NAME
+              value: "customer_care_agent"
+            # Claim key where NAM sends role(s), e.g. roles, role, groups. Map NAM value -> usr_roles.role_name via OAUTH_NAM_ROLE_MAPPING.
+            # - name: OAUTH_NAM_ROLE_CLAIM
+            #   value: "roles"
+            # JSON mapping NAM value -> our role_name. Only super_admin is mapped from NAM; e.g. {"super_admin":"super_admin","Super Admin":"super_admin"}
+            # - name: OAUTH_NAM_ROLE_MAPPING
+            #   value: '{"super_admin":"super_admin"}'
+            # Shared with main API: same DB and JWT issuer
+            - name: ENV
+              valueFrom:
+                secretKeyRef:
+                  name: general-config-secret
+                  key: env
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: user
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: password
+            - name: MYSQL_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: host
+            - name: MYSQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: database
+            - name: MYSQL_CONNECTION_LIMIT
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: connectionLimit
+            - name: MYSQL_MULTIPLE_STATEMENTS
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: multipleStatements
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: secret
+            - name: JWT_PRIVATE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: privateKey
+            - name: JWT_PUBLIC_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: publicKey
+            - name: JWT_EXPIRES_IN
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: ttl
+            - name: REFRESH_TOKEN_EXPIRES_IN
+              value: "7d"
+            # AWS (CloudWatch; same secret as main API)
+            - name: AWS_REGION
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret
+                  key: region
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret
+                  key: accessKeyID
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret
+                  key: secretAccessKey
+            - name: CLOUDWATCH_LOG_GROUP
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret
+                  key: cloudwatchLogGroup
+            - name: CLOUDWATCH_LOG_STREAM
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret
+                  key: adminPortalLogStream
+            # UIM / SMS (same secret as main API)
+            - name: VC_UIM_ORIGIN
+              valueFrom:
+                secretKeyRef:
+                  name: uim-secret
+                  key: origin
+            - name: VC_UIM_BASE_PATH
+              valueFrom:
+                secretKeyRef:
+                  name: uim-secret
+                  key: basePath
+            - name: VC_UIM_AUTH_SERVICE_ENDPOINT
+              valueFrom:
+                secretKeyRef:
+                  name: uim-secret
+                  key: authServiceEndpoint
+            - name: VC_UIM_SMS_SERVICE_ENDPOINT
+              valueFrom:
+                secretKeyRef:
+                  name: uim-secret
+                  key: smsServiceEndpoint
+            - name: VC_UIM_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: uim-secret
+                  key: username
+            - name: VC_UIM_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: uim-secret
+                  key: password
+            - name: VC_UIM_SOURCE_ID
+              valueFrom:
+                secretKeyRef:
+                  name: uim-secret
+                  key: sourceId
+            - name: VC_UIM_MESSAGE_TYPE_ID
+              valueFrom:
+                secretKeyRef:
+                  name: uim-secret
+                  key: messageTypeId
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: admin-portal-api-serv
+spec:
+  selector:
+    app: admin-portal-api
+  ports:
+    - protocol: TCP
+      port: 9001
+      targetPort: 9001
+  type: ClusterIP

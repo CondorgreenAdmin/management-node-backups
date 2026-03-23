@@ -1,0 +1,97 @@
+apiVersion: networking.k8s.io/v1
+kind: IngressClass
+metadata:
+  name: nginx
+spec:
+  controller: k8s.io/ingress-nginx
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-service
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "200m"
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - "pfpqa.vodacom.corp"
+        - "pfpqa.vodacom.co.za"
+      secretName: tls
+  rules:
+    - host: pfpqa.vodacom.corp
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/fibre/prepaid/admin/api"
+            backend:
+              service:
+                name: admin-portal-api-serv
+                port:
+                  number: 9001
+          - pathType: Prefix
+            path: "/fibre/prepaid/admin"
+            backend:
+              service:
+                name: admin-portal-client-serv
+                port:
+                  number: 80
+          - pathType: Prefix
+            path: "/fibre/prepaid/partner"
+            backend:
+              service:
+                name: bpclient-serv
+                port:
+                  number: 80
+          - pathType: Prefix
+            path: "/fibre/prepaid/api"
+            backend:
+              service:
+                name: api-serv
+                port:
+                  number: 80
+          - pathType: Prefix
+            path: "/fibre/prepaid"
+            backend:
+              service:
+                name: client-serv
+                port:
+                  number: 80
+    - host: pfpqa.vodacom.co.za
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/fibre/prepaid/admin/api"
+            backend:
+              service:
+                name: admin-portal-api-serv
+                port:
+                  number: 9001
+          - pathType: Prefix
+            path: "/fibre/prepaid/admin"
+            backend:
+              service:
+                name: admin-portal-client-serv
+                port:
+                  number: 80
+          - pathType: Prefix
+            path: "/fibre/prepaid/partner"
+            backend:
+              service:
+                name: bpclient-serv
+                port:
+                  number: 80
+          - pathType: Prefix
+            path: "/fibre/prepaid/api"
+            backend:
+              service:
+                name: api-serv
+                port:
+                  number: 80
+          - pathType: Prefix
+            path: "/fibre/prepaid"
+            backend:
+              service:
+                name: client-serv
+                port:
+                  number: 80

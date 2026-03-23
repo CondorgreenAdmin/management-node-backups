@@ -1,0 +1,37 @@
+# Admin Portal client (SPA) deployment (UAT).
+# Build from admin-portal/client; image tagged as admin-portal-client.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: admin-portal-client-depl
+  labels:
+    app: admin-portal-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: admin-portal-client
+  template:
+    metadata:
+      labels:
+        app: admin-portal-client
+    spec:
+      containers:
+        - name: admin-portal-client
+          image: 211125559653.dkr.ecr.af-south-1.amazonaws.com/nonprod_pfp_ecr:admin-portal-client-456
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: admin-portal-client-serv
+spec:
+  selector:
+    app: admin-portal-client
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: ClusterIP
