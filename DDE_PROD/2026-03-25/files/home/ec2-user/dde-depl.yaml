@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dde-depl
+  labels:
+    app: dde
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dde
+  template:
+    metadata:
+      labels:
+        app: dde
+    spec:
+      containers:
+      - name: dde
+        image: 835860129811.dkr.ecr.af-south-1.amazonaws.com/dev-dde@sha256:cfc542af854d8cb2cf56eb4a83a7f5d472d12180018efe903ad71a5b12d795fb
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dde-serv
+spec:
+  selector:
+    app: dde
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: ClusterIP

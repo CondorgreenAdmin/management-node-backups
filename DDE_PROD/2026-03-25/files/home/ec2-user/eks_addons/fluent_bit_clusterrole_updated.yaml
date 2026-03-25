@@ -1,0 +1,75 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"rbac.authorization.k8s.io/v1","kind":"ClusterRole","metadata":{"annotations":{},"name":"cloudwatch-agent-role"},"rules":[{"apiGroups":[""],"resources":["pods","nodes","endpoints"],"verbs":["list","watch"]},{"apiGroups":["apps"],"resources":["replicasets","daemonsets","deployments"],"verbs":["list","watch"]},{"apiGroups":["batch"],"resources":["jobs"],"verbs":["list","watch"]},{"apiGroups":[""],"resources":["nodes/proxy"],"verbs":["get"]},{"apiGroups":[""],"resources":["nodes/stats","configmaps","events"],"verbs":["create"]},{"apiGroups":[""],"resourceNames":["cwagent-clusterleader"],"resources":["configmaps"],"verbs":["get","update"]},{"nonResourceURLs":["/metrics"],"verbs":["get","list","watch"]}]}
+  creationTimestamp: "2023-10-25T13:13:49Z"
+  labels:
+    app.kubernetes.io/instance: amazon-cloudwatch-observability
+    app.kubernetes.io/managed-by: EKS
+    app.kubernetes.io/name: amazon-cloudwatch-observability
+    app.kubernetes.io/version: 1.0.0
+  name: cloudwatch-agent-role
+  resourceVersion: "3889294"
+  uid: e4bf1ac1-2f15-4543-a49c-889e0e57460a
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  - pods/logs
+  - nodes
+  - nodes/proxy
+  - namespaces
+  - endpoints
+  verbs:
+  - list
+  - watch
+  - get
+- apiGroups:
+  - ""
+  resources:
+  - services
+  verbs:
+  - list
+  - watch
+- apiGroups:
+  - apps
+  resources:
+  - replicasets
+  - daemonsets
+  - deployments
+  - statefulsets
+  verbs:
+  - list
+  - watch
+  - get
+- apiGroups:
+  - batch
+  resources:
+  - jobs
+  verbs:
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - nodes/stats
+  - configmaps
+  - events
+  verbs:
+  - create
+  - get
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  verbs:
+  - update
+- nonResourceURLs:
+  - /metrics
+  verbs:
+  - get
+  - list
+  - watch

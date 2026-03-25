@@ -1,0 +1,127 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  annotations:
+    deprecated.daemonset.template.generation: "2"
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"apps/v1","kind":"DaemonSet","metadata":{"annotations":{"deprecated.daemonset.template.generation":"1"},"creationTimestamp":"2023-10-25T13:13:49Z","generation":1,"name":"cloudwatch-agent","namespace":"amazon-cloudwatch","resourceVersion":"102564650","uid":"2cd669bf-5b92-4146-b6ac-0e58c595fc45"},"spec":{"revisionHistoryLimit":10,"selector":{"matchLabels":{"name":"cloudwatch-agent"}},"template":{"metadata":{"creationTimestamp":null,"labels":{"name":"cloudwatch-agent"}},"spec":{"containers":[{"env":[{"name":"HOST_IP","valueFrom":{"fieldRef":{"apiVersion":"v1","fieldPath":"status.hostIP"}}},{"name":"HOST_NAME","valueFrom":{"fieldRef":{"apiVersion":"v1","fieldPath":"spec.nodeName"}}},{"name":"K8S_NAMESPACE","valueFrom":{"fieldRef":{"apiVersion":"v1","fieldPath":"metadata.namespace"}}},{"name":"CI_VERSION","value":"k8s/1.3.17"}],"image":"public.ecr.aws/cloudwatch-agent/cloudwatch-agent:1.300028.1b210","imagePullPolicy":"IfNotPresent","name":"cloudwatch-agent","resources":{"limits":{"cpu":"400m","memory":"400Mi"},"requests":{"cpu":"400m","memory":"400Mi"}},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","volumeMounts":[{"mountPath":"/etc/cwagentconfig","name":"cwagentconfig"},{"mountPath":"/rootfs","name":"rootfs","readOnly":true},{"mountPath":"/var/run/docker.sock","name":"dockersock","readOnly":true},{"mountPath":"/var/lib/docker","name":"varlibdocker","readOnly":true},{"mountPath":"/run/containerd/containerd.sock","name":"containerdsock","readOnly":true},{"mountPath":"/sys","name":"sys","readOnly":true},{"mountPath":"/dev/disk","name":"devdisk","readOnly":true}]}],"dnsPolicy":"ClusterFirst","nodeSelector":{"kubernetes.io/os":"linux"},"restartPolicy":"Always","schedulerName":"default-scheduler","securityContext":{},"serviceAccount":"fluent-bit","serviceAccountName":"fluent-bit","terminationGracePeriodSeconds":60,"volumes":[{"configMap":{"defaultMode":420,"name":"cwagentconfig"},"name":"cwagentconfig"},{"hostPath":{"path":"/","type":""},"name":"rootfs"},{"hostPath":{"path":"/var/run/docker.sock","type":""},"name":"dockersock"},{"hostPath":{"path":"/var/lib/docker","type":""},"name":"varlibdocker"},{"hostPath":{"path":"/run/containerd/containerd.sock","type":""},"name":"containerdsock"},{"hostPath":{"path":"/sys","type":""},"name":"sys"},{"hostPath":{"path":"/dev/disk/","type":""},"name":"devdisk"}]}},"updateStrategy":{"rollingUpdate":{"maxSurge":0,"maxUnavailable":1},"type":"RollingUpdate"}},"status":{"currentNumberScheduled":2,"desiredNumberScheduled":2,"numberAvailable":2,"numberMisscheduled":0,"numberReady":2,"observedGeneration":1,"updatedNumberScheduled":2}}
+  creationTimestamp: "2023-10-25T13:13:49Z"
+  generation: 2
+  name: cloudwatch-agent
+  namespace: amazon-cloudwatch
+  resourceVersion: "124142380"
+  uid: 2cd669bf-5b92-4146-b6ac-0e58c595fc45
+spec:
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      name: cloudwatch-agent
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        name: cloudwatch-agent
+    spec:
+      containers:
+      - env:
+        - name: HOST_IP
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: status.hostIP
+        - name: HOST_NAME
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: spec.nodeName
+        - name: K8S_NAMESPACE
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+        - name: CI_VERSION
+          value: k8s/1.3.17
+        image: public.ecr.aws/cloudwatch-agent/cloudwatch-agent:1.300028.1b210
+        imagePullPolicy: IfNotPresent
+        name: cloudwatch-agent
+        resources:
+          limits:
+            cpu: 400m
+            memory: 400Mi
+          requests:
+            cpu: 400m
+            memory: 400Mi
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /etc/cwagentconfig
+          name: cwagentconfig
+        - mountPath: /rootfs
+          name: rootfs
+          readOnly: true
+        - mountPath: /var/run/docker.sock
+          name: dockersock
+          readOnly: true
+        - mountPath: /var/lib/docker
+          name: varlibdocker
+          readOnly: true
+        - mountPath: /run/containerd/containerd.sock
+          name: containerdsock
+          readOnly: true
+        - mountPath: /sys
+          name: sys
+          readOnly: true
+        - mountPath: /dev/disk
+          name: devdisk
+          readOnly: true
+      dnsPolicy: ClusterFirst
+      nodeSelector:
+        kubernetes.io/os: linux
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      serviceAccount: fluent-bit
+      serviceAccountName: fluent-bit
+      terminationGracePeriodSeconds: 60
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: cwagentconfig
+        name: cwagentconfig
+      - hostPath:
+          path: /
+          type: ""
+        name: rootfs
+      - hostPath:
+          path: /var/run/docker.sock
+          type: ""
+        name: dockersock
+      - hostPath:
+          path: /var/lib/docker
+          type: ""
+        name: varlibdocker
+      - hostPath:
+          path: /run/containerd/containerd.sock
+          type: ""
+        name: containerdsock
+      - hostPath:
+          path: /sys
+          type: ""
+        name: sys
+      - hostPath:
+          path: /dev/disk/
+          type: ""
+        name: devdisk
+  updateStrategy:
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+    type: RollingUpdate
+status:
+  currentNumberScheduled: 2
+  desiredNumberScheduled: 2
+  numberAvailable: 2
+  numberMisscheduled: 0
+  numberReady: 2
+  observedGeneration: 2
+  updatedNumberScheduled: 2

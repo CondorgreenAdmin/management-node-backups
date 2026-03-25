@@ -1,0 +1,12 @@
+[ req ]
+default_bits = 2048
+prompt = no
+distinguished_name = req_distinguished_name
+
+[ req_distinguished_name ]
+C = ZA
+ST = Western Cape
+L = Cape Town
+O = Vodacom
+OU = CBU
+CN = michael-testing.co.za

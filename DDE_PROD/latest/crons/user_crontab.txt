@@ -1,0 +1,49 @@
+#min    #hour   #day    #month  #DayOfWeek(0,7=Sunday)  #command
+00      08      *       *       1,2,3,4,5               /home/ec2-user/SOX_reporting/DDE-SOX-reporting.sh >> /dev/null
+05      08      *       *       1,2,3,4,5               /home/ec2-user/healthchecks/DDE-healthchecks.sh >> /dev/null
+01      08      *       *       *	                /home/ec2-user/scripts/DDE-BBDashboard.sh >> /dev/null
+00      00      *       *       *                       /home/ec2-user/automation/aws_user_activity/aws_user_activity.sh >> /dev/null
+
+50      04      *       *       7	                /home/ec2-user/automation/dataloads/DDE-EPX-master.sh >> /dev/null
+44      07      *       *       *                       /home/ec2-user/automation/rotations/DDE-check-rotations.sh >> /dev/null
+50      07      *       *       *                       /home/ec2-user/automation/rotations/DDE-check-passwords.sh >> /dev/null
+00      09      *       *       *	                /home/ec2-user/automation/DMS/dms_app_users.sh >> /dev/null
+05      08      *       *       *	                /home/ec2-user/automation/TAGS/DDE-PRD-tags.sh >> /dev/null
+15      08      *       *       *	                /home/ec2-user/automation/rotations/check-gitlab-token-expire.sh >> /dev/null
+*/15    *       *       *       *                       /home/ec2-user/automation/EKS/check_node_statuses.sh >> /dev/null
+0       9       13      *       *                       /home/ec2-user/automation/restoreTests/generate_automated_restore_report.sh >>/home/ec2-user/automation/restoreTests/status.log 2>&1
+0       3       22      *       *                       /home/ec2-user/automation/archiving/stg_backfill_old_cycles.sh >> /home/ec2-user/automation/archiving/status.log 2>&1
+
+#IMDSv2 check on ec2 instances
+00      20      1       *       *                       /home/ec2-user/automation/imdsv2/imdsv2_ec2.sh >> /dev/null
+
+#Implement DB autoscaling based on performance
+#*/2     8-18    *       *       1-5                     /home/ec2-user/automation/autoscaling/check-and-scale.sh
+# Optional: auto-downsize at 18:05 daily (or run manually when load subsides)
+
+
+#versioning scripts 
+15	08	*	*	1,2,3,4,5		/home/ec2-user/versioning/DDE-releaseChecks.sh >> /dev/null  
+55	06	1	*	*			/home/ec2-user/versioning/scripts/releasechecksnewmonth.sh >> /dev/null 
+00	07	1	*	*			/home/ec2-user/versioning/scripts/DDE-monthlyReleaseChecks2.sh >> /dev/null	
+
+#Script backups
+00      00      *       *       7                       /home/ec2-user/backups/script_backups.sh >> /dev/null
+
+#VB templates
+00      19      *       *       *                       /home/ec2-user/automation/vb_templates/vb_master_extract_PROD.sh >> /dev/null       #extracts lates data for remote XLS generation
+30      06      *       *       *                       /home/ec2-user/automation/vb_templates/vb_master_upload_PROD.sh >> /dev/null        #uploads to S3 latest local XLS generation
+
+#VAS CLEANUP
+#50	05	*	*	7			/home/ec2-user/automation/dataloads/DDE-VAS-CLEANUP.sh
+
+#RDS Autiscaling
+###*        *      *       *       *			/usr/bin/flock -n /tmp/aurora-autscale.lock /home/ec2-user/automation/autoscaling/check-and-scale.sh	#Checks Writer CPU & DBload and up or downscales as necessary
+
+#Implement Monthly predetermined scaling for the deal cycle generations period
+###org###  50      23      28      *       *                        /home/ec2-user/automation/autoscaling/fixed-aurora-upsize.sh
+50      23      23      *       *                        /home/ec2-user/automation/autoscaling/fixed-aurora-upsize.sh
+0       21      08      *       *                        /home/ec2-user/automation/autoscaling/fixed-aurora-downsize.sh
+
+
+#*      *      *      *       *                        /home/ec2-user/automation/autoscaling/up-test.sh

@@ -1,0 +1,7 @@
+[client]
+user=ReadOnly
+host=prd-dde.cluster-czz7nbdwrez3.af-south-1.rds.amazonaws.com
+database=DDE-prd
+ssl-ca=/home/ec2-user/global-rds-bundle.pem
+ssl-mode=VERIFY_CA
+password=I5ZkQ%B4XkceHUti3tvc

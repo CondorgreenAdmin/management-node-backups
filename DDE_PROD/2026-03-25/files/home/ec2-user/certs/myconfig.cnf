@@ -1,0 +1,17 @@
+[ req ]
+default_bits = 2048
+prompt = no
+distinguished_name = dn
+req_extensions = v3_req
+[ dn ]
+C  = ZA
+ST = Western Cape
+L  = Cape Town
+O  = Vodacom
+OU = CBU
+CN = vbportal-uat.vodacom.corp
+[ v3_req ]
+subjectAltName = @alt_names
+[ alt_names ]
+DNS.1 = vbportal-dev.vodacom.corp
+DNS.2 = vbportal-qa.vodacom.corp

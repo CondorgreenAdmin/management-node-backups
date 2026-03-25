@@ -1,0 +1,10 @@
+#!/bin/bash
+INFORMIXDIR="/opt/IBM/Informix_Client-SDK"
+INFORMIXSQLHOSTS="$INFORMIXDIR/etc/sqlhosts_dde.std"
+INFORMIXSERVER="csgeppixqa_tcp"
+PATH=$PATH:$INFORMIXDIR/bin
+
+export INFORMIXDIR
+export INFORMIXSQLHOSTS
+export INFORMIXSERVER
+export PATH

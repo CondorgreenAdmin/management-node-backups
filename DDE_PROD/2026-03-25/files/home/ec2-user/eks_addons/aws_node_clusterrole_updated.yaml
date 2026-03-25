@@ -1,0 +1,82 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"rbac.authorization.k8s.io/v1","kind":"ClusterRole","metadata":{"annotations":{},"labels":{"app.kubernetes.io/instance":"aws-vpc-cni","app.kubernetes.io/name":"aws-node","app.kubernetes.io/version":"v1.14.1","k8s-app":"aws-node"},"name":"aws-node"},"rules":[{"apiGroups":["crd.k8s.amazonaws.com"],"resources":["eniconfigs"],"verbs":["list","watch","get"]},{"apiGroups":[""],"resources":["namespaces"],"verbs":["list","watch","get"]},{"apiGroups":[""],"resources":["pods"],"verbs":["list","watch","get"]},{"apiGroups":[""],"resources":["nodes"],"verbs":["list","watch","get","update"]},{"apiGroups":["","events.k8s.io"],"resources":["events"],"verbs":["create","patch","list"]},{"apiGroups":["networking.k8s.aws"],"resources":["policyendpoints"],"verbs":["get","list","watch"]},{"apiGroups":["networking.k8s.aws"],"resources":["policyendpoints/status"],"verbs":["get"]}]}
+  creationTimestamp: "2023-10-07T14:42:59Z"
+  labels:
+    app.kubernetes.io/instance: aws-vpc-cni
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: aws-node
+    app.kubernetes.io/version: v1.19.2
+    helm.sh/chart: aws-vpc-cni-1.19.2
+    k8s-app: aws-node
+  name: aws-node
+  resourceVersion: "268"
+  uid: d4298bc2-05f0-4e90-8273-789e5f0ad329
+rules:
+- apiGroups:
+  - crd.k8s.amazonaws.com
+  resources:
+  - eniconfigs
+  verbs:
+  - list
+  - watch
+  - get
+- apiGroups:
+  - ""
+  resources:
+  - namespaces
+  verbs:
+  - list
+  - watch
+  - get
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  verbs:
+  - list
+  - watch
+  - get
+- apiGroups:
+  - ""
+  resources:
+  - nodes
+  verbs:
+  - list
+  - watch
+  - get
+- apiGroups:
+  - ""
+  - events.k8s.io
+  resources:
+  - events
+  verbs:
+  - create
+  - patch
+  - list
+- apiGroups:
+  - networking.k8s.aws
+  resources:
+  - policyendpoints
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - networking.k8s.aws
+  resources:
+  - policyendpoints/status
+  verbs:
+  - get
+- apiGroups:
+  - vpcresources.k8s.aws
+  resources:
+  - cninodes
+  verbs:
+  - get
+  - list
+  - watch
+  - patch
