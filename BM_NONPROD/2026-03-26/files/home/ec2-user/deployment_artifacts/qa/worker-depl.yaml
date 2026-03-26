@@ -1,0 +1,115 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: qa-product-catalogue
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker-depl
+  namespace: qa-product-catalogue
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: worker
+  template:
+    metadata:
+      labels:
+        app: worker
+      annotations:
+        version: "1.0.0-300"
+    spec:
+      containers:
+        - name: worker
+          image: 396913725884.dkr.ecr.af-south-1.amazonaws.com/qa/product-catalogue/worker:1.0.0-300
+          imagePullPolicy: Always
+          env:
+            - name: SERVICE_NAME
+              value: worker-service
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: NODE_ENV
+              value: qa
+            - name: MONGO_URI
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-secret
+                  key: URI
+            - name: MONGO_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-secret
+                  key: USER
+            - name: MONGO_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-secret
+                  key: PASS
+            - name: MONGO_AUTHSOURCE
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-secret
+                  key: AUTH_SOURCE
+            - name: SMTP_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: mail-secret
+                  key: HOST
+            - name: SMTP_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: mail-secret
+                  key: PORT
+            - name: MAIL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mail-secret
+                  key: USER
+            - name: MAIL_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: mail-secret
+                  key: PASS
+            - name: MAIL_FROM
+              valueFrom:
+                secretKeyRef:
+                  name: mail-secret
+                  key: FROM
+            - name: NATS_CLIENT_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: NATS_URL
+              value: "http://nats-srv:4222"
+            - name: NATS_CLUSTER_ID
+              value: product_catalogue
+            - name: REDIS_HOST
+              value: worker-redis-srv
+            - name: ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret
+                  key: ACCESS_KEY_ID
+            - name: SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret
+                  key: SECRET_ACCESS_KEY
+            - name: REGION
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret
+                  key: REGION
+            - name: BUCKET
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret
+                  key: BUCKET
+            - name: FOLDER
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret
+                  key: FOLDER

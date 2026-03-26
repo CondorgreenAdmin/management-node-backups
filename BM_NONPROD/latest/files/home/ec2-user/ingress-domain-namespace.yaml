@@ -1,0 +1,67 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: uat-beyond-mobile
+---
+apiVersion: networking.k8s.io/v1
+kind: IngressClass
+metadata:
+  name: nginx
+spec:
+  controller: k8s.io/ingress-nginx
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-service
+  namespace: uat-beyond-mobile
+  annotations:
+    nginx.ingress.kubernetes.io/whitelist-source-range: "0.0.0.0/0"
+    nginx.ingress.kubernetes.io/proxy-body-size: "200m"
+    cert-manager.io/cluster-issuer: letsencrypt
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+spec:
+  ingressClassName: nginx
+  # tls:
+  #   - hosts:
+  #       - beyondmobile.dev.condorgreenapps.co.za
+  #     secretName: beyondmobile-dev-cert
+  rules:
+    - host: vbportal-uat.vodacom.corp
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/api/offerManagement"
+            backend:
+              service:
+                name: offer-management-serv
+                port:
+                  number: 80
+          - pathType: Prefix
+            path: "/api/opportunityManagement"
+            backend:
+              service:
+                name: opportunity-management-serv
+                port:
+                  number: 80
+          - pathType: Prefix
+            path: "/api/quoteManagement"
+            backend:
+              service:
+                name: quote-management-serv
+                port:
+                  number: 80
+          - pathType: Prefix
+            path: "/api/workflowManagement"
+            backend:
+              service:
+                name: workflow-management-serv
+                port:
+                  number: 80
+          - pathType: Prefix
+            path: "/api/documentManagement"
+            backend:
+              service:
+                name: document-management-serv
+                port:
+                  number: 80

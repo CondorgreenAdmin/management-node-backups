@@ -1,0 +1,1 @@
+{"scriptVersion":1,"cmdline":"--ScriptName open_files.py --filter-command java,javaw --filter-env log4j,LOG4J --filter-name log4j,LOG4J --id log4j_handlers","handlers":[],"ports":{},"environ":{},"dirlist":{},"manifest":{},"mitigation_marked":false,"target_software":{},"java_version":{}}

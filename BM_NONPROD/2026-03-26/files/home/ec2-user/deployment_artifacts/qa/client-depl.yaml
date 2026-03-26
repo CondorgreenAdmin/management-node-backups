@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: qa-product-catalogue
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-depl
+  namespace: qa-product-catalogue
+  labels:
+    app: client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: client
+  template:
+    metadata:
+      labels:
+        app: client
+      annotations:
+        version: "0.0.0-300"
+    spec:
+      containers:
+        - name: client
+          image: 396913725884.dkr.ecr.af-south-1.amazonaws.com/qa/product-catalogue/client:0.0.0-300
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: client-serv
+  namespace: qa-product-catalogue
+spec:
+  selector:
+    app: client
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: ClusterIP

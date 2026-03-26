@@ -1,0 +1,27 @@
+kubectl create secret generic document-management-wcc-secret -n dev-beyond-mobile --from-literal=PASSWORD=j5l+DAxl6?qwIDAQ@ --from-literal=RETRIEVE_URL=http://tfmwa04aa11rh.vodacom.corp:8011/services/ViewAttachmentDocumentWrapper/v1/GetDocument --from-literal=UPLOAD_URL=http://tfmwa04aa11rh.vodacom.corp:8011/services/Bluesky/UploadDocument/v1 --from-literal=USERNAME=svc_vbportal_css_vodacom_qa 
+
+kubectl create secret generic offer-management-mysql-secret -n dev-beyond-mobile --from-literal=DATABASE=dev_offer_management --from-literal=HOST=nonprod-bm-rds1-cluster.cluster-c1esioioqpsf.af-south-1.rds.amazonaws.com --from-literal=PASSWORD=P@ssw0rd01 --from-literal=USER=bm_app_user 
+
+kubectl create secret generic opportunity-management-afrigis-secret -n dev-beyond-mobile --from-literal=AFRIGIS_AUTH_KEY=rRESXEh3l38smPVQ0Ax8h1aaI6jzIhxP6EQJVd84 --from-literal=PASSWORD=welcome1 --from-literal=PRODUCTS_API=http://integration-qa.vodacom.co.za:7003/productManagement/v1/product --from-literal=PRODUCT_FEASIBLE_GET_API=http://integration-qa.vodacom.co.za:7003/productManagement/v1/productFeasibleGet --from-literal=PRODUCT_FEASIBLE_POST_API=http://integration-qa.vodacom.co.za:7003/productManagement/v1/productFeasiblePost --from-literal=USERNAME=weblogic 
+
+kubectl create secret generic opportunity-management-external-api-secret -n dev-beyond-mobile --from-literal=ACCOUNT_CREATION_API=http://esbmaple.vodacom.co.za/accountManagement/v1/accountCreation --from-literal=ACCOUNT_TEAM_UPDATE_API=http://esbmaple.vodacom.co.za/organizationManagement/v1/organization/update --from-literal=ACCOUNT_UPDATE_API=http://esbmaple.vodacom.co.za/accountManagement/v2/account/update --from-literal=ADDRESS_AUTOCOMPLETE_API=http://esbcedar.vodacom.co.za/accountManagement/v1/account/autoComplete --from-literal=ADDRESS_PLACE_DETAILS_API=http://esbcedar.vodacom.co.za/accountManagement/v1/account/placeDetails --from-literal=CONTACT_CREATION_API=http://esbmaple.vodacom.co.za/customer/v1/contactCreation --from-literal=CONTACT_UPDATE_API=http://esbmaple.vodacom.co.za/customerManagement/v1/contact/update --from-literal=CREATE_ADDRESS_API=http://esbmaple.vodacom.co.za/geographicAddressManagement/v1/createAddress --from-literal=PASSWORD=Change_12320250917 --from-literal=USERNAME=svc_vbportal_bss_qa_vodacom 
+
+###kubectl create secret generic opportunity-management-mysql-secret -n dev-beyond-mobile --from-literal=DATABASE=dev_opportunity_management --from-literal=HOST=nonprod-bm-rds1-cluster.cluster-c1esioioqpsf.af-south-1.rds.amazonaws.com --from-literal=PASSWORD=P@ssw0rd01 --from-literal=USER=bm_app_user 
+
+kubectl create secret generic order-management-external-api-secret -n dev-beyond-mobile --from-literal=ADD_ORDER_API=http://esbmaple.vodacom.co.za/productOrder/v2/addOrder --from-literal=ADD_VETTING_ATTACHMENT_API=http://esbmaple.vodacom.co.za/documentManagement/v4/productOrder --from-literal=GET_ORDER_VETTING_REQUIREMENTS_API=http://esbmaple.vodacom.co.za/customerManagement/v1/getVetting --from-literal=PASSWORD=Change_12320250917 --from-literal=SET_ORDER_SHIP_TO_ADDRESS_API=http://integration-qa.vodacom.co.za:7003/addressManagement/v1/shipToAddress --from-literal=SET_ORDER_VETTING_DETAILS_API=http://esbmaple.vodacom.co.za/customerManagement/v1/customers/setVetting --from-literal=SUBMIT_SALES_ORDER_API=http://intergation-dev.vodacom.co.za:7003/productOrder/v1/submitSalesOrder --from-literal=USERNAME=svc_vbportal_bss_qa_vodacom --from-literal=VALIDATE_ORDER_API=http://esbmaple.vodacom.co.za/productOrder/v2/orderValidation 
+
+kubectl create secret generic order-management-mysql-secret -n dev-beyond-mobile --from-literal=DATABASE=dev_order_management --from-literal=HOST=nonprod-bm-rds1-cluster.cluster-c1esioioqpsf.af-south-1.rds.amazonaws.com --from-literal=PASSWORD=P@ssw0rd01 --from-literal=USER=bm_app_user 
+
+kubectl create secret generic quote-management-external-api-secret -n dev-beyond-mobile --from-literal=GET_DOCUMENT_API=http://esbmaple.vodacom.co.za/documentManagement/v3/getDocument --from-literal=IMPRESSION_SIGNATURE_API=http://esbmaple.vodacom.co.za/documentManagement/v2/impressionSignature --from-literal=PASSWORD=devuser123 --from-literal=QUOTE_DOCUMENT_API=http://esbmaple.vodacom.co.za/documentManagement/v2/quoteDocument --from-literal=USERNAME=selvd001_vodacom --from-literal=WCC_DOCUMENT_API=http://esbmaple.vodacom.co.za/documentManagement/v2/impressionWCCUploadDoc 
+
+###kubectl create secret generic quote-management-mysql-secret -n dev-beyond-mobile --from-literal=DATABASE=dev_quote_management --from-literal=HOST=nonprod-bm-rds1-cluster.cluster-c1esioioqpsf.af-south-1.rds.amazonaws.com --from-literal=PASSWORD=P@ssw0rd01 --from-literal=USER=bm_app_user 
+
+###kubectl create secret generic workflow-management-mail-secret -n dev-beyond-mobile --from-literal=FROM=BeyondMobile --from-literal=HOST=postman.vodacom.co.za --from-literal=PASS=pass --from-literal=PORT=25 --from-literal=USER=user 
+
+###kubectl create secret generic workflow-management-mongodb-secret -n dev-beyond-mobile --from-literal=AUTH_SOURCE=admin --from-literal=PASS=admin123 --from-literal=URI=mongodb://nonprod-bm-mongodb1.cluster-c1esioioqpsf.af-south-1.docdb.amazonaws.com:27017/qa-workflow-management?replicaSet=rs0&retryWrites=false --from-literal=USER=app_user 
+
+
+#opportunity-management-mysql-secret
+#quote-management-mysql-secret      
+#workflow-management-mail-secret    
+#workflow-management-mongodb-secret 

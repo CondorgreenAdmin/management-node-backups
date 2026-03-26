@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev-product-catalogue
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker-redis-depl
+  namespace: dev-product-catalogue
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: worker-redis
+  template:
+    metadata:
+      labels:
+        app: worker-redis
+    spec:
+      containers:
+        - name: worker-redis
+          image: 396913725884.dkr.ecr.af-south-1.amazonaws.com/nonprod_bm_ecr_repo:redis
+          imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: worker-redis-srv
+  namespace: dev-product-catalogue
+spec:
+  selector:
+    app: worker-redis
+  ports:
+    - name: db
+      protocol: TCP
+      port: 6379
+      targetPort: 6379

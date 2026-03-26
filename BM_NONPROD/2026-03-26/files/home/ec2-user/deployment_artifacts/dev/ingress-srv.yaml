@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev-product-catalogue
+---
+apiVersion: networking.k8s.io/v1
+kind: IngressClass
+metadata:
+  name: nginx
+spec:
+  controller: k8s.io/ingress-nginx
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-service
+  namespace: dev-product-catalogue
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "200m"
+spec:
+  ingressClassName: nginx
+  # tls:
+  #   - hosts:
+  #       - "productcatalogue.vodacom.co.za"
+  #     secretName: productcatalogue-vodacom-tls
+  rules:
+    - host: productcatalogue.dev.vodacom.co.za
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/api"
+            backend:
+              service:
+                name: api-serv
+                port:
+                  number: 80
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: client-serv
+                port:
+                  number: 80

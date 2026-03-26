@@ -1,0 +1,65 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev-product-catalogue
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webhook-depl
+  namespace: dev-product-catalogue
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webhook
+  template:
+    metadata:
+      labels:
+        app: webhook
+      annotations:
+        version: "1.0.0-359"
+    spec:
+      containers:
+        - name: webhook
+          image: 396913725884.dkr.ecr.af-south-1.amazonaws.com/dev/product-catalogue/webhook:1.0.0-359
+          imagePullPolicy: Always
+          env:
+            - name: SERVICE_NAME
+              value: webhook-service
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: NODE_ENV
+              value: dev
+            - name: MONGO_URI
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-secret
+                  key: URI
+            - name: MONGO_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-secret
+                  key: USER
+            - name: MONGO_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-secret
+                  key: PASS
+            - name: MONGO_AUTHSOURCE
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-secret
+                  key: AUTH_SOURCE
+            - name: NATS_CLIENT_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: NATS_URL
+              value: "http://nats-srv:4222"
+            - name: NATS_CLUSTER_ID
+              value: product_catalogue
+            - name: REDIS_HOST
+              value: webhook-redis-srv

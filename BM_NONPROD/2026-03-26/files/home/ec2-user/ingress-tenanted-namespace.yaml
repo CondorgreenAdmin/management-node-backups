@@ -1,0 +1,74 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: uat-vb-portal
+---
+apiVersion: networking.k8s.io/v1
+kind: IngressClass
+metadata:
+  name: nginx
+spec:
+  controller: k8s.io/ingress-nginx
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-service
+  namespace: uat-vb-portal
+  annotations:
+    nginx.ingress.kubernetes.io/whitelist-source-range: "0.0.0.0/0"
+    nginx.ingress.kubernetes.io/proxy-body-size: "200m"
+    cert-manager.io/cluster-issuer: letsencrypt
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+spec:
+  ingressClassName: nginx
+  tls:
+    # - hosts:
+    #     - vbportal.dev.condorgreenapps.co.za
+    #   secretName: vbportal-dev-cert
+  rules:
+    - host: vbportal-uat.vodacom.corp
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/api/commercial"
+            backend:
+              service:
+                name: commercial-api-serv
+                port:
+                  number: 80
+          - pathType: Prefix
+            path: "/api/sales"
+            backend:
+              service:
+                name: sales-api-serv
+                port:
+                  number: 80
+          - pathType: Prefix
+            path: "/commercial"
+            backend:
+              service:
+                name: commercial-client-serv
+                port:
+                  number: 80
+          - pathType: Prefix
+            path: "/sales"
+            backend:
+              service:
+                name: sales-client-serv
+                port:
+                  number: 80
+          - pathType: Prefix
+            path: "/api"
+            backend:
+              service:
+                name: auth-api-serv
+                port:
+                  number: 80
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: auth-client-serv
+                port:
+                  number: 80

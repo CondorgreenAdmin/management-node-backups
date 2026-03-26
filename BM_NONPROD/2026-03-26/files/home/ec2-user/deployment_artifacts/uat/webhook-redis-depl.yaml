@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: uat-product-catalogue
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webhook-redis-depl
+  namespace: uat-product-catalogue
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webhook-redis
+  template:
+    metadata:
+      labels:
+        app: webhook-redis
+    spec:
+      containers:
+        - name: webhook-redis
+          image: 396913725884.dkr.ecr.af-south-1.amazonaws.com/nonprod_bm_ecr_repo:redis
+          imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webhook-redis-srv
+  namespace: uat-product-catalogue
+spec:
+  selector:
+    app: webhook-redis
+  ports:
+    - name: db
+      protocol: TCP
+      port: 6379
+      targetPort: 6379
