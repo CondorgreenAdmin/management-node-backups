@@ -1,0 +1,7 @@
+#min    #hour   #?      #?      #DayOfWeek(0, 7=Sunday) #command
+45      08      *       *       *               /home/ec2-user/automation/TAGS/BM-NONPROD-tags.sh > /dev/null
+00      00      *       *       *               /home/ec2-user/automation/aws_user_activity/aws_user_activity.sh > /dev/null
+05      00      *       *       *               /home/ec2-user/automation/rotations/BM-check-rotations.sh > /dev/null
+
+# Management node backups
+0        4      *       *       * /home/ec2-user/backups/github_backups/github_backup.sh >> /home/ec2-user/backups/github_backups/logs/github_backup.log 2>&1
