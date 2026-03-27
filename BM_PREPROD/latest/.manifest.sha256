@@ -637,7 +637,6 @@
 312c79edf7737533879972bfd080c87cdaec44c8ad995a955e1271d108cc3c75  files/usr/local/aws-cli/v2/2.24.25/dist/awscli/botocore/data/mediatailor/2018-04-23/completions-1.json
 3150ce9792254a965d80d429b24ca8b39df53e489902d7b29872da36eaf1bea8  files/home/ec2-user/aws/dist/awscli/botocore/data/invoicing/2024-12-01/endpoint-rule-set-1.json
 3150ce9792254a965d80d429b24ca8b39df53e489902d7b29872da36eaf1bea8  files/usr/local/aws-cli/v2/2.24.25/dist/awscli/botocore/data/invoicing/2024-12-01/endpoint-rule-set-1.json
-31a95414fc7ec21d24986bbd3957a36621ad591b8abb11754059ac4e84576e4d  crons/user_crontab.txt
 31c8d8c5bed3acedcf2c45eb62bc8f8eb74c11b99b498b6cdb302edacd336e76  files/home/ec2-user/aws/dist/awscli/botocore/data/qapps/2023-11-27/paginators-1.json
 31c8d8c5bed3acedcf2c45eb62bc8f8eb74c11b99b498b6cdb302edacd336e76  files/usr/local/aws-cli/v2/2.24.25/dist/awscli/botocore/data/qapps/2023-11-27/paginators-1.json
 321c962d3f38e0aa8d4df2163e9e23608c7da57c5c1e5f4ae5f9442ee6f291a0  files/etc/profile.d/256term.sh
@@ -697,6 +696,7 @@
 36682180552d86f4200b74aa5ee6419feeaf9d42797b2dcc658069445ed832a2  files/usr/local/aws-cli/v2/2.24.25/dist/awscli/botocore/data/lex-models/2017-04-19/paginators-1.json
 369e3873487fb22a7473d7a3413cb7362d51f9a33418379f0b93338e18582365  files/home/ec2-user/aws/dist/awscli/botocore/data/cloudtrail/2013-11-01/completions-1.json
 369e3873487fb22a7473d7a3413cb7362d51f9a33418379f0b93338e18582365  files/usr/local/aws-cli/v2/2.24.25/dist/awscli/botocore/data/cloudtrail/2013-11-01/completions-1.json
+36a2fe8bcadf1e0362b3122c537318ce6dc084f50dc8892749b1b2824dc8085b  files/var/opt/microsoft/mdatp/shutdown_monitor.json
 36fdf60fede3c00ad6b522904e388c03ba906f85443cc1fd12a5084e2db88855  files/home/ec2-user/aws/dist/awscli/botocore/data/controlcatalog/2018-05-10/endpoint-rule-set-1.json
 36fdf60fede3c00ad6b522904e388c03ba906f85443cc1fd12a5084e2db88855  files/usr/local/aws-cli/v2/2.24.25/dist/awscli/botocore/data/controlcatalog/2018-05-10/endpoint-rule-set-1.json
 36ff4e1e90a2590cae8f9b23fcfcfed138db9e6b62302474b6ec92300a736233  files/home/ec2-user/aws/dist/awscli/botocore/data/fms/2018-01-01/paginators-1.json
@@ -1244,6 +1244,7 @@
 61575feffd620711fb33c1a174aa21c20d346284e52435c317599a0e4a976d11  files/usr/local/aws-cli/v2/2.24.25/dist/awscli/botocore/data/application-insights/2018-11-25/service-2.json
 616968378153d08c4d864506e0aa1ab4a349c9cf6ed56af2859cb57dd50657af  files/home/ec2-user/aws/dist/awscli/botocore/data/launch-wizard/2018-05-10/endpoint-rule-set-1.json
 616968378153d08c4d864506e0aa1ab4a349c9cf6ed56af2859cb57dd50657af  files/usr/local/aws-cli/v2/2.24.25/dist/awscli/botocore/data/launch-wizard/2018-05-10/endpoint-rule-set-1.json
+619a45de82a9db7fbcf7962c180c274a08ae065d794eefcb9de9e39159c99362  crons/etc_crontab
 619e292279f79ef544514c6d871c8bf0c38c2474691cc03ee27351f315242e0d  files/etc/oddjobd.conf.d/oddjobd-introspection.conf
 61d530724232169c335af905cb99f600482459777bbe367737d688565064bed0  files/etc/prelink.conf.d/fipscheck.conf
 61f11aec5169e32d14bd0535ed39f59e7de888823ac33781cb96b4ec717ca0a5  files/home/ec2-user/aws/dist/awscli/botocore/data/mq/2017-11-27/endpoint-rule-set-1.json
@@ -1738,7 +1739,6 @@
 7f6579a3a53579a58fdb7acfe10c9b99edf07e3ef5a147d7efdbaf86fb11f93d  files/usr/local/aws-cli/v2/2.24.25/dist/awscli/botocore/data/bedrock-runtime/2023-09-30/paginators-1.json
 7f9deff2652df58a02ca676ff9494de3d93f18db64c7f20f9596dffb8c92f187  files/home/ec2-user/Python-3.13.2/Modules/_xxtestfuzz/fuzz_json_loads_corpus/pass2.json
 7fb959ba2053842c5e0d60605a5ed7528fca2727414700cf3783c3f1309d2f30  files/etc/security/chroot.conf
-7fef32757d2098ddbc44e586c4bfbeee9d18d000614d3bba95536e5540cc4468  crons/etc_crontab
 7ff1dd94ff295df8e992a15c57488e1750431735d36aa9ad9d68c77e86cfd44b  files/home/ec2-user/aws/dist/awscli/botocore/data/workdocs/2016-05-01/endpoint-rule-set-1.json
 7ff1dd94ff295df8e992a15c57488e1750431735d36aa9ad9d68c77e86cfd44b  files/usr/local/aws-cli/v2/2.24.25/dist/awscli/botocore/data/workdocs/2016-05-01/endpoint-rule-set-1.json
 800b2d552c35cb5ea786141916faadabe24c94348f9342726ea70fb5934642e5  files/home/ec2-user/aws/dist/awscli/botocore/data/ecr/2015-09-21/completions-1.json
@@ -2462,6 +2462,7 @@ a7a1b88a2d26608236bdb19f021588f583e4ffded5fd662723c4b9af37549f01  files/home/ec2
 a7a1b88a2d26608236bdb19f021588f583e4ffded5fd662723c4b9af37549f01  files/usr/local/aws-cli/v2/2.24.25/dist/awscli/botocore/data/route53profiles/2018-05-10/endpoint-rule-set-1.json
 a7c63ed3a9b79238276293f1f1b0b936e37c6afe85340309943f7303adf53daf  files/home/ec2-user/aws/dist/awscli/botocore/data/migrationhub-config/2019-06-30/endpoint-rule-set-1.json
 a7c63ed3a9b79238276293f1f1b0b936e37c6afe85340309943f7303adf53daf  files/usr/local/aws-cli/v2/2.24.25/dist/awscli/botocore/data/migrationhub-config/2019-06-30/endpoint-rule-set-1.json
+a7c844046f4059a77fb751476c31d75a208683b0073cef1249c1e6de0627b0a5  crons/user_crontab.txt
 a7f0a8aa9376577b520f649b17393945898cf0994eecc3dba5b9b918a134de4d  files/home/ec2-user/aws/dist/awscli/botocore/data/supplychain/2024-01-01/service-2.json
 a7f0a8aa9376577b520f649b17393945898cf0994eecc3dba5b9b918a134de4d  files/usr/local/aws-cli/v2/2.24.25/dist/awscli/botocore/data/supplychain/2024-01-01/service-2.json
 a816dbb4247da1c68d81c32286088d6d0d36b3fa1f8ed10de45e99fb6f96f048  files/home/ec2-user/aws/dist/awscli/botocore/data/opsworkscm/2016-11-01/endpoint-rule-set-1.json
@@ -2884,7 +2885,6 @@ c4972a64d28e5e8603d297c43bc4963abc576ac7b5d103ccc7083101718c6573  files/usr/loca
 c4ac71d12faf00520645ec807c299d585d8c300318bbecf17a861a8955a423ac  files/home/ec2-user/aws/dist/awscli/botocore/data/iotsitewise/2019-12-02/service-2.json
 c4ac71d12faf00520645ec807c299d585d8c300318bbecf17a861a8955a423ac  files/usr/local/aws-cli/v2/2.24.25/dist/awscli/botocore/data/iotsitewise/2019-12-02/service-2.json
 c53a342743eb798fdbaaa29287b26993ac31da6e14631b1118ecf172cb4b43e2  files/etc/GeoIP.conf
-c567395ff11b32a7df5ae767a89404c53d53c23526b743e65601eba6be80c975  files/var/opt/microsoft/mdatp/shutdown_monitor.json
 c56a18b805dc0d8ded6cc405d4bed63e6a0ef8431ea57138c4364bbc41cfb6bd  files/home/ec2-user/aws/dist/awscli/botocore/data/securitylake/2018-05-10/service-2.json
 c56a18b805dc0d8ded6cc405d4bed63e6a0ef8431ea57138c4364bbc41cfb6bd  files/usr/local/aws-cli/v2/2.24.25/dist/awscli/botocore/data/securitylake/2018-05-10/service-2.json
 c58195fbb56d339af219fa2bb077b945f225aadd648b4e4c906f92b4fc397f0b  files/home/ec2-user/aws/dist/awscli/botocore/data/iotevents/2018-07-27/service-2.json
