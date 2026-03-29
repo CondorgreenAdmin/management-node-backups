@@ -37,6 +37,7 @@
 01d828605f4ec6d0071d2a2be34d7276bc746f7a256af1a14306ab1c38660bd7  files/usr/src/kernels/4.14.352-267.564.amzn2.x86_64/scripts/checksyscalls.sh
 01d828605f4ec6d0071d2a2be34d7276bc746f7a256af1a14306ab1c38660bd7  files/usr/src/kernels/4.14.355-280.710.amzn2.x86_64/scripts/checksyscalls.sh
 01d828605f4ec6d0071d2a2be34d7276bc746f7a256af1a14306ab1c38660bd7  files/usr/src/kernels/4.14.355-280.714.amzn2.x86_64/scripts/checksyscalls.sh
+01f3d0e4f0818942357e06ec10e5e70349301c2c6894b4b59263df322cbc2d03  crons/etc_crontab
 0205ef658dd4ee1ee250c8dda820ce345c5723b8f3fd904d756029248bc64322  files/home/ec2-user/aws/dist/awscli/botocore/data/imagebuilder/2019-12-02/endpoint-rule-set-1.json
 0205ef658dd4ee1ee250c8dda820ce345c5723b8f3fd904d756029248bc64322  files/home/ec2-user/.old_local/lib/aws/lib/python3.8/site-packages/botocore/data/imagebuilder/2019-12-02/endpoint-rule-set-1.json
 0205ef658dd4ee1ee250c8dda820ce345c5723b8f3fd904d756029248bc64322  files/usr/local/aws-cli/v2/2.17.32/dist/awscli/botocore/data/imagebuilder/2019-12-02/endpoint-rule-set-1.json
@@ -2017,7 +2018,6 @@
 58b7698015a88bc3091affc3572917adc10bac68e5223645298a964c5854e056  files/home/ec2-user/aws/dist/awscli/botocore/data/freetier/2023-09-07/service-2.json
 58b7698015a88bc3091affc3572917adc10bac68e5223645298a964c5854e056  files/home/ec2-user/.old_local/lib/aws/lib/python3.8/site-packages/botocore/data/freetier/2023-09-07/service-2.json
 58b7698015a88bc3091affc3572917adc10bac68e5223645298a964c5854e056  files/usr/local/aws-cli/v2/2.17.32/dist/awscli/botocore/data/freetier/2023-09-07/service-2.json
-58c5f8f974f2503af8da124366fdb4026c4e77c88b0cde26fbd61be89cc75157  crons/etc_crontab
 5944b7c902d5ef4900e2bacc0047c30e2c52220015916a7636be87bbd55b16d7  files/home/ec2-user/aws/dist/awscli/botocore/data/connect/2017-08-08/paginators-1.json
 5944b7c902d5ef4900e2bacc0047c30e2c52220015916a7636be87bbd55b16d7  files/home/ec2-user/.old_local/lib/aws/lib/python3.8/site-packages/botocore/data/connect/2017-08-08/paginators-1.json
 5944b7c902d5ef4900e2bacc0047c30e2c52220015916a7636be87bbd55b16d7  files/usr/local/aws-cli/v2/2.17.32/dist/awscli/botocore/data/connect/2017-08-08/paginators-1.json
